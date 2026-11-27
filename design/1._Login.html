@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — BandUp Words</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config" data-stitch-original-src="b88fee06f5638fdd===../../tailwind.config.js">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'hot-pink': '#0F7F77',
+        'bright-blue': '#0A615B',
+        'pastel-mint': '#DDE8D3',
+        'pastel-lavender': '#E8E4F0',
+        'pastel-peach': '#FBE0D6',
+        'pastel-sky': '#DCEBE8',
+        'pastel-rose': '#F9DDD8',
+        'peach': '#F6B8A5',
+        'coral': '#E8664A',
+        'sunny-yellow': '#F6B8A5',
+        'on-sunny-yellow': '#1E3B35',
+        'sunny-yellow-container': '#FBE0D6',
+        'on-sunny-yellow-container': '#1E3B35',
+        'success': '#2E7D52',
+        'on-success': '#FAF7EC',
+        'success-container': '#DDE8D3',
+        'on-success-container': '#1E3B35',
+        'error': '#A93B32',
+        'on-error': '#FAF7EC',
+        'error-container': '#F9DDD8',
+        'on-error-container': '#1E3B35',
+        'light-primary': '#0F7F77',
+        'light-on-primary': '#FAF7EC',
+        'light-primary-container': '#DDE8D3',
+        'light-on-primary-container': '#1E3B35',
+        'light-secondary': '#0A615B',
+        'light-on-secondary': '#FAF7EC',
+        'light-secondary-container': '#DCEBE8',
+        'light-on-secondary-container': '#1E3B35',
+        'light-tertiary': '#B84932',
+        'light-on-tertiary': '#FAF7EC',
+        'light-tertiary-container': '#FBE0D6',
+        'light-on-tertiary-container': '#1E3B35',
+        'light-background': '#F3EFDF',
+        'light-on-background': '#1E3B35',
+        'light-surface': '#F3EFDF',
+        'light-surface-container-lowest': '#FAF7EC',
+        'light-surface-container-low': '#DDE8D3',
+        'light-surface-container': '#D4E1C8',
+        'light-surface-container-high': '#C8D8BA',
+        'light-on-surface': '#1E3B35',
+        'light-on-surface-variant': '#3D5C54',
+        'light-outline': '#6E8880',
+        'light-outline-variant': '#C9D6BF',
+      },
+      borderRadius: {
+        'sm': '8px',
+        'DEFAULT': '12px',
+        'md': '12px',
+        'lg': '12px',
+        'xl': '16px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '20px',
+      },
+      fontFamily: {
+        'display': ['"Fraunces"', 'sans-serif'],
+        'headline': ['"Fraunces"', 'sans-serif'],
+        'title': ['"Fraunces"', 'sans-serif'],
+        'body': ['"Inter"', 'sans-serif'],
+        'label': ['"Inter"', 'sans-serif'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['38px', { lineHeight: '46px', letterSpacing: '-0.5px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg': ['30px', { lineHeight: '36px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg-mobile': ['24px', { lineHeight: '30px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-lg': ['18px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '600' }],
+        'body-lg': ['16px', { lineHeight: '26px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-md': ['14px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['15px', { lineHeight: '20px', letterSpacing: '0.1px', fontWeight: '600' }],
+        'label-md': ['13px', { lineHeight: '18px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'label-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'mono-md': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '500' }],
+      },
+      transitionDuration: {
+        'state-change': '150ms',
+        'card-flip': '300ms',
+        'reward-pop': '280ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'card-flip': '0ms',
+        'reward-pop': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'card-flip': 'cubic-bezier(0.2, 0, 0, 1)',
+        'reward-pop': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&amp;family=Inter:wght@400;500;600&amp;family=Source+Code+Pro:wght@500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>.material-symbols-outlined { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }</style>
+</head>
+<body class="bg-light-surface text-light-on-surface font-body antialiased">
+  <div class="min-h-screen flex flex-col items-center justify-center p-page-margin md:p-gutter-xl">
+    <main class="w-full max-w-md flex flex-col gap-gutter-lg">
+      <!-- Brand Header + Campus Illustration -->
+      <header class="flex flex-col items-center text-center gap-gutter-sm">
+        <img src="https://lh3.googleusercontent.com/aida/ALJJyrBVKHidyA74x1PnQHZuBCKajh1LVbrMkGJ2C87TQG9q7i-6xh2PkRbSU55MqE24bawvlIR662qEHMuNrF77KdGhNs__DeuIwtSAGKb7V33w5Iu-_LI0y8WYFDzv6DXkOE_Y6Usv4ddq4O33sXPEtAGcP2ws0INXKbMRnN7bM2duCeBBygiziP9PVVaV2MjKyivd830VFshCXMglaQwnK7WLDZImFH5_MDE2Ay8dG34c8Ni9V0rY" alt="University campus library with students studying" class="w-full h-40 object-cover rounded border border-light-outline-variant shadow-sm" data-stitch-original-src="99c84f35bfea1227===../../images/campus_login.jpg">
+        <div class="flex flex-col gap-gutter-xs pt-gutter-xs">
+          <h1 data-component-id="typography-display" data-component-type="typography" data-component-variant="display" data-design-text-token="display-lg" class="font-display text-display-lg-mobile md:text-display-lg text-light-on-surface text-balance">
+            BandUp Words
+          </h1>
+          <p data-component-id="typography-body" data-component-type="typography" data-component-variant="body" data-design-text-token="body-lg" class="font-body text-body-lg text-light-on-surface-variant text-pretty max-w-xs mx-auto">
+            Boost your IELTS vocabulary with flashcards and active Speaking, Writing, Reading &amp; Listening practice.
+          </p>
+        </div>
+      </header>
+
+      <!-- Login Card -->
+      <section data-component-id="card-elevated" data-component-type="card" data-component-variant="elevated" class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg md:p-gutter-xl shadow-sm flex flex-col gap-gutter-lg">
+        <form id="login-form" class="flex flex-col gap-gutter-md" onsubmit="handleLogin(event)">
+          <!-- First Name -->
+          <label data-component-id="input-field-text" data-component-type="input-field" data-component-variant="text" class="flex flex-col gap-gutter-xs w-full">
+            <span class="font-label text-label-md text-light-on-surface" data-design-text-token="label-md">First name</span>
+            <input id="first-name" type="text" required placeholder="e.g. Leyla" class="w-full rounded border border-light-outline-variant bg-light-surface-container-lowest px-gutter-md py-gutter-sm font-body text-body-lg text-light-on-surface placeholder:text-light-outline focus:border-light-primary focus:ring-2 focus:ring-light-primary-container focus:outline-none">
+          </label>
+
+          <!-- Last Name -->
+          <label data-component-id="input-field-text" data-component-type="input-field" data-component-variant="text" class="flex flex-col gap-gutter-xs w-full">
+            <span class="font-label text-label-md text-light-on-surface" data-design-text-token="label-md">Last name</span>
+            <input id="last-name" type="text" required placeholder="e.g. Mammadova" class="w-full rounded border border-light-outline-variant bg-light-surface-container-lowest px-gutter-md py-gutter-sm font-body text-body-lg text-light-on-surface placeholder:text-light-outline focus:border-light-primary focus:ring-2 focus:ring-light-primary-container focus:outline-none">
+          </label>
+
+          <!-- Primary CTA -->
+          <button data-component-id="button-primary" data-component-type="button" data-component-variant="primary" type="submit" class="mt-gutter-sm w-full inline-flex items-center justify-center gap-gutter-sm px-gutter-lg py-gutter-md rounded-full bg-gradient-to-r from-light-primary to-light-secondary text-light-on-primary shadow-md hover:opacity-95 active:scale-95 transition-transform duration-state-change ease-state-change focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light-primary">
+            <span class="font-label text-label-lg" data-design-text-token="label-lg">Start Learning</span>
+            <span class="material-symbols-outlined text-title-lg" aria-hidden="true">arrow_forward</span>
+          </button>
+        </form>
+
+        <div id="login-feedback" class="hidden rounded bg-success-container text-on-success-container px-gutter-md py-gutter-sm font-label text-label-md text-center">
+          Welcome! Heading to your study dashboard...
+        </div>
+      </section>
+
+      <div class="text-center">
+        <a href="#admin-login" class="font-label text-label-sm text-light-on-surface-variant hover:underline">Admin login</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      var first = document.getElementById('first-name').value.trim() || 'Leyla';
+      var last = document.getElementById('last-name').value.trim() || 'Mammadova';
+      try {
+        localStorage.setItem('bandup_user', JSON.stringify({ firstName: first, lastName: last }));
+      } catch (err) {}
+      var fb = document.getElementById('login-feedback');
+      fb.textContent = 'Welcome, ' + first + '! Your IELTS study streak starts now.';
+      fb.classList.remove('hidden');
+    }
+  </script>
+
+
+</body></html>

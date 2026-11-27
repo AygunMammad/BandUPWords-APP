@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gap-fill &amp; Translation — BandUp Words</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config" data-stitch-original-src="b88fee06f5638fdd===../../tailwind.config.js">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'hot-pink': '#0F7F77',
+        'bright-blue': '#0A615B',
+        'pastel-mint': '#DDE8D3',
+        'pastel-lavender': '#E8E4F0',
+        'pastel-peach': '#FBE0D6',
+        'pastel-sky': '#DCEBE8',
+        'pastel-rose': '#F9DDD8',
+        'peach': '#F6B8A5',
+        'coral': '#E8664A',
+        'sunny-yellow': '#F6B8A5',
+        'on-sunny-yellow': '#1E3B35',
+        'sunny-yellow-container': '#FBE0D6',
+        'on-sunny-yellow-container': '#1E3B35',
+        'success': '#2E7D52',
+        'on-success': '#FAF7EC',
+        'success-container': '#DDE8D3',
+        'on-success-container': '#1E3B35',
+        'error': '#A93B32',
+        'on-error': '#FAF7EC',
+        'error-container': '#F9DDD8',
+        'on-error-container': '#1E3B35',
+        'light-primary': '#0F7F77',
+        'light-on-primary': '#FAF7EC',
+        'light-primary-container': '#DDE8D3',
+        'light-on-primary-container': '#1E3B35',
+        'light-secondary': '#0A615B',
+        'light-on-secondary': '#FAF7EC',
+        'light-secondary-container': '#DCEBE8',
+        'light-on-secondary-container': '#1E3B35',
+        'light-tertiary': '#B84932',
+        'light-on-tertiary': '#FAF7EC',
+        'light-tertiary-container': '#FBE0D6',
+        'light-on-tertiary-container': '#1E3B35',
+        'light-background': '#F3EFDF',
+        'light-on-background': '#1E3B35',
+        'light-surface': '#F3EFDF',
+        'light-surface-container-lowest': '#FAF7EC',
+        'light-surface-container-low': '#DDE8D3',
+        'light-surface-container': '#D4E1C8',
+        'light-surface-container-high': '#C8D8BA',
+        'light-on-surface': '#1E3B35',
+        'light-on-surface-variant': '#3D5C54',
+        'light-outline': '#6E8880',
+        'light-outline-variant': '#C9D6BF',
+      },
+      borderRadius: {
+        'sm': '8px',
+        'DEFAULT': '12px',
+        'md': '12px',
+        'lg': '12px',
+        'xl': '16px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '20px',
+      },
+      fontFamily: {
+        'display': ['"Fraunces"', 'sans-serif'],
+        'headline': ['"Fraunces"', 'sans-serif'],
+        'title': ['"Fraunces"', 'sans-serif'],
+        'body': ['"Inter"', 'sans-serif'],
+        'label': ['"Inter"', 'sans-serif'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['38px', { lineHeight: '46px', letterSpacing: '-0.5px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg': ['30px', { lineHeight: '36px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg-mobile': ['24px', { lineHeight: '30px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-lg': ['18px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '600' }],
+        'body-lg': ['16px', { lineHeight: '26px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-md': ['14px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['15px', { lineHeight: '20px', letterSpacing: '0.1px', fontWeight: '600' }],
+        'label-md': ['13px', { lineHeight: '18px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'label-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'mono-md': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '500' }],
+      },
+      transitionDuration: {
+        'state-change': '150ms',
+        'card-flip': '300ms',
+        'reward-pop': '280ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'card-flip': '0ms',
+        'reward-pop': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'card-flip': 'cubic-bezier(0.2, 0, 0, 1)',
+        'reward-pop': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&amp;family=Inter:wght@400;500;600&amp;family=Source+Code+Pro:wght@500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>.material-symbols-outlined { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }</style>
+</head>
+<body class="bg-light-surface text-light-on-surface font-body antialiased">
+  <div class="min-h-screen flex flex-col">
+    <!-- Desktop Top Navigation Bar -->
+    <header class="hidden md:flex sticky top-0 z-30 bg-light-surface-container-lowest border-b border-light-outline-variant">
+      <div class="w-full max-w-5xl mx-auto px-gutter-lg py-gutter-md flex items-center justify-between gap-gutter-lg">
+        <a href="#home" class="flex items-center gap-gutter-sm">
+          <span class="w-10 h-10 rounded-DEFAULT bg-gradient-to-br from-hot-pink to-bright-blue flex items-center justify-center text-light-on-primary">
+            <span class="material-symbols-outlined text-title-lg" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">auto_stories</span>
+          </span>
+          <span class="font-display text-title-lg text-light-on-surface" data-design-text-token="title-lg">BandUp Words</span>
+        </a>
+        <nav aria-label="Primary navigation" class="flex items-center gap-gutter-sm">
+          <a href="#home" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-sm rounded-full bg-light-primary-container text-light-on-primary-container font-label text-label-md">
+            <span class="material-symbols-outlined text-title-md" aria-hidden="true">home</span>
+            <span data-design-text-token="label-md">Home</span>
+          </a>
+          <a href="#progress" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-sm rounded-full text-light-on-surface-variant hover:bg-light-surface-container-low font-label text-label-md">
+            <span class="material-symbols-outlined text-title-md" aria-hidden="true">bar_chart</span>
+            <span data-design-text-token="label-md">Progress</span>
+          </a>
+          <a href="#profile" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-sm rounded-full text-light-on-surface-variant hover:bg-light-surface-container-low font-label text-label-md">
+            <span class="material-symbols-outlined text-title-md" aria-hidden="true">person</span>
+            <span data-design-text-token="label-md">Profile</span>
+          </a>
+        </nav>
+        <div class="flex items-center gap-gutter-sm">
+          <span class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-sunny-yellow-container text-on-sunny-yellow-container border border-sunny-yellow font-label text-label-md tabular-nums">
+            <span class="material-symbols-outlined text-label-lg" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">bolt</span>
+            <span>1,255 XP</span>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 w-full max-w-3xl mx-auto px-page-margin md:px-gutter-lg pt-gutter-lg pb-24 md:pb-gutter-xl flex flex-col gap-gutter-lg">
+      <!-- Top Bar -->
+      <div class="flex flex-col gap-gutter-sm">
+        <div class="flex items-center justify-between gap-gutter-md">
+          <button data-component-id="button-icon" data-component-type="button" data-component-variant="icon" type="button" aria-label="Back to Section" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-light-surface-container-lowest border border-light-outline-variant text-light-on-surface">
+            <span class="material-symbols-outlined text-title-lg" aria-hidden="true">arrow_back</span>
+          </button>
+          <h1 class="font-title text-title-lg text-light-on-surface" data-design-text-token="title-lg">Gap-fill &amp; Translation</h1>
+          <span class="font-label text-label-md text-light-on-surface-variant tabular-nums">2 / 10</span>
+        </div>
+        <div class="w-full h-3 bg-light-surface-container rounded-full overflow-hidden">
+          <div class="h-full w-1/5 bg-gradient-to-r from-hot-pink to-bright-blue rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Mode Switcher Tabs -->
+      <div class="grid grid-cols-3 gap-gutter-xs p-gutter-xs rounded-full bg-light-surface-container-low border border-light-outline-variant">
+        <button type="button" onclick="switchTask(&#39;gap&#39;)" id="tab-gap" class="py-gutter-sm px-gutter-sm rounded-full bg-gradient-to-r from-light-primary to-light-secondary text-light-on-primary font-label text-label-md">Gap-fill</button>
+        <button type="button" onclick="switchTask(&#39;az-en&#39;)" id="tab-az-en" class="py-gutter-sm px-gutter-sm rounded-full text-light-on-surface-variant font-label text-label-md">AZ → EN</button>
+        <button type="button" onclick="switchTask(&#39;en-az&#39;)" id="tab-en-az" class="py-gutter-sm px-gutter-sm rounded-full text-light-on-surface-variant font-label text-label-md">EN → AZ</button>
+      </div>
+
+      <!-- Gap-fill Card (Active) -->
+      <section id="panel-gap" data-component-id="card-elevated" data-component-type="card" data-component-variant="elevated" class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col gap-gutter-md">
+        <div class="flex items-center justify-between gap-gutter-sm">
+          <span class="px-gutter-md py-gutter-xs rounded-full bg-light-secondary-container text-light-on-secondary-container font-label text-label-sm">Fill in the blank</span>
+          <span class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-sunny-yellow-container text-on-sunny-yellow-container border border-sunny-yellow font-label text-label-sm tabular-nums">
+            <span class="material-symbols-outlined text-label-md" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">bolt</span>
+            <span>+15 XP</span>
+          </span>
+        </div>
+
+        <p class="font-body text-body-lg text-light-on-surface leading-relaxed">
+          &#34;Strict emission laws can help <span class="inline-block px-gutter-md py-0.5 rounded-sm bg-light-surface-container font-label text-label-md text-light-secondary">________</span> the damage caused by heavy industry.&#34;
+        </p>
+
+        <form onsubmit="checkGap(event)" class="flex flex-col sm:flex-row gap-gutter-sm">
+          <input id="gap-input" type="text" value="mitigate" placeholder="Type the missing word..." class="flex-1 rounded-md border border-light-outline-variant bg-light-surface-container-lowest px-gutter-md py-gutter-sm font-body text-body-lg text-light-on-surface focus:border-bright-blue focus:ring-2 focus:ring-light-secondary-container focus:outline-none">
+          <button type="submit" class="px-gutter-lg py-gutter-sm rounded-full bg-gradient-to-r from-light-primary to-light-secondary text-light-on-primary font-label text-label-lg shadow-sm">Check</button>
+        </form>
+
+        <!-- Automatic Instant Comparison Below Input -->
+        <div id="gap-feedback" class="rounded-lg border border-success bg-success-container p-gutter-md flex flex-col gap-gutter-sm">
+          <div class="flex flex-wrap items-center justify-between gap-gutter-sm">
+            <div class="flex items-center gap-gutter-sm">
+              <span class="material-symbols-outlined text-success text-title-lg" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">check_circle</span>
+              <span class="font-title text-title-md text-on-success-container">Correct! +15 XP earned</span>
+            </div>
+            <div class="flex items-center gap-gutter-sm font-label text-label-md">
+              <span class="px-gutter-sm py-0.5 rounded-sm bg-light-surface-container-lowest text-success border border-success">Your answer: mitigate</span>
+              <span class="px-gutter-sm py-0.5 rounded-sm bg-success text-on-success">Correct: mitigate</span>
+            </div>
+          </div>
+          <div class="border-t border-success pt-gutter-sm flex flex-col gap-gutter-xs text-on-success-container">
+            <p class="font-body text-body-md"><strong>Definition:</strong> To make something less harmful, unpleasant, or severe.</p>
+            <p class="font-body text-body-md italic"><strong>Example:</strong> &#34;Planting urban trees helps mitigate the impact of extreme summer heat.&#34;</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Translation Card (AZ -> EN) -->
+      <section id="panel-az-en" class="hidden bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex-col gap-gutter-md">
+        <div class="flex items-center justify-between gap-gutter-sm">
+          <span class="px-gutter-md py-gutter-xs rounded-full bg-light-primary-container text-light-on-primary-container font-label text-label-sm">Azerbaijani → English</span>
+          <span class="font-label text-label-sm text-light-on-surface-variant">Press Enter to submit</span>
+        </div>
+
+        <div class="rounded-md bg-light-surface-container-low p-gutter-md">
+          <p class="font-label text-label-sm text-light-on-surface-variant mb-gutter-xs">Translate into English:</p>
+          <p class="font-headline text-headline-md text-light-on-surface">hər yerdə mövcud olan</p>
+        </div>
+
+        <input type="text" value="ubiquitousness" placeholder="Type English translation..." class="w-full rounded-md border border-error bg-light-surface-container-lowest px-gutter-md py-gutter-sm font-body text-body-lg text-light-on-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-light-primary">
+
+        <div class="rounded-lg border border-error bg-error-container p-gutter-md flex flex-col gap-gutter-sm">
+          <div class="flex flex-wrap items-center justify-between gap-gutter-sm">
+            <div class="flex items-center gap-gutter-sm">
+              <span class="material-symbols-outlined text-error text-title-lg" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">cancel</span>
+              <span class="font-title text-title-md text-on-error-container">Almost! Check the adjective form</span>
+            </div>
+            <div class="flex items-center gap-gutter-sm font-label text-label-md">
+              <span class="px-gutter-sm py-0.5 rounded-sm bg-light-surface-container-lowest text-error border border-error">Yours: ubiquitousness</span>
+              <span class="px-gutter-sm py-0.5 rounded-sm bg-success text-on-success">Correct: ubiquitous</span>
+            </div>
+          </div>
+          <div class="border-t border-error pt-gutter-sm flex flex-col gap-gutter-xs text-on-error-container">
+            <p class="font-body text-body-md"><strong>Definition:</strong> Present, appearing, or found everywhere.</p>
+            <p class="font-body text-body-md italic"><strong>Example:</strong> &#34;Smartphones have become ubiquitous in modern classrooms.&#34;</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Translation Card (EN -> AZ) -->
+      <section id="panel-en-az" class="hidden bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex-col gap-gutter-md">
+        <div class="flex items-center justify-between gap-gutter-sm">
+          <span class="px-gutter-md py-gutter-xs rounded-full bg-light-secondary-container text-light-on-secondary-container font-label text-label-sm">English → Azerbaijani</span>
+        </div>
+        <div class="rounded-md bg-light-surface-container-low p-gutter-md">
+          <p class="font-label text-label-sm text-light-on-surface-variant mb-gutter-xs">Translate into Azerbaijani:</p>
+          <p class="font-headline text-headline-md text-light-on-surface">exacerbate</p>
+        </div>
+        <input type="text" placeholder="Type Azerbaijani translation..." class="w-full rounded-md border border-light-outline-variant bg-light-surface-container-lowest px-gutter-md py-gutter-sm font-body text-body-lg text-light-on-surface focus:border-bright-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-light-primary">
+      </section>
+    </main>
+
+    <!-- Mobile Bottom Tab Bar -->
+    <nav aria-label="Mobile navigation" class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-light-surface-container-lowest border-t border-light-outline-variant px-gutter-lg py-gutter-sm">
+      <div class="flex items-center justify-around">
+        <a href="#home" aria-current="page" class="flex flex-col items-center gap-gutter-xs text-light-primary">
+          <span class="material-symbols-outlined text-headline-md" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">home</span>
+          <span class="font-label text-label-sm">Home</span>
+        </a>
+        <a href="#progress" class="flex flex-col items-center gap-gutter-xs text-light-on-surface-variant">
+          <span class="material-symbols-outlined text-headline-md" aria-hidden="true">bar_chart</span>
+          <span class="font-label text-label-sm">Progress</span>
+        </a>
+        <a href="#profile" class="flex flex-col items-center gap-gutter-xs text-light-on-surface-variant">
+          <span class="material-symbols-outlined text-headline-md" aria-hidden="true">person</span>
+          <span class="font-label text-label-sm">Profile</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <script>
+    function switchTask(tab) {
+      ['gap', 'az-en', 'en-az'].forEach(function(id) {
+        var panel = document.getElementById('panel-' + id);
+        var btn = document.getElementById('tab-' + id);
+        if (id === tab) {
+          panel.classList.remove('hidden');
+          panel.classList.add('flex');
+          btn.className = 'py-gutter-sm px-gutter-sm rounded-full bg-gradient-to-r from-hot-pink to-bright-blue text-light-on-primary font-label text-label-md';
+        } else {
+          panel.classList.add('hidden');
+          panel.classList.remove('flex');
+          btn.className = 'py-gutter-sm px-gutter-sm rounded-full text-light-on-surface-variant font-label text-label-md';
+        }
+      });
+    }
+    function checkGap(e) {
+      e.preventDefault();
+      document.getElementById('gap-feedback').classList.remove('hidden');
+    }
+  </script>
+
+
+</body></html>

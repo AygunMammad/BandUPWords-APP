@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — BandUp Words</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config" data-stitch-original-src="b88fee06f5638fdd===../../tailwind.config.js">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'hot-pink': '#0F7F77',
+        'bright-blue': '#0A615B',
+        'pastel-mint': '#DDE8D3',
+        'pastel-lavender': '#E8E4F0',
+        'pastel-peach': '#FBE0D6',
+        'pastel-sky': '#DCEBE8',
+        'pastel-rose': '#F9DDD8',
+        'peach': '#F6B8A5',
+        'coral': '#E8664A',
+        'sunny-yellow': '#F6B8A5',
+        'on-sunny-yellow': '#1E3B35',
+        'sunny-yellow-container': '#FBE0D6',
+        'on-sunny-yellow-container': '#1E3B35',
+        'success': '#2E7D52',
+        'on-success': '#FAF7EC',
+        'success-container': '#DDE8D3',
+        'on-success-container': '#1E3B35',
+        'error': '#A93B32',
+        'on-error': '#FAF7EC',
+        'error-container': '#F9DDD8',
+        'on-error-container': '#1E3B35',
+        'light-primary': '#0F7F77',
+        'light-on-primary': '#FAF7EC',
+        'light-primary-container': '#DDE8D3',
+        'light-on-primary-container': '#1E3B35',
+        'light-secondary': '#0A615B',
+        'light-on-secondary': '#FAF7EC',
+        'light-secondary-container': '#DCEBE8',
+        'light-on-secondary-container': '#1E3B35',
+        'light-tertiary': '#B84932',
+        'light-on-tertiary': '#FAF7EC',
+        'light-tertiary-container': '#FBE0D6',
+        'light-on-tertiary-container': '#1E3B35',
+        'light-background': '#F3EFDF',
+        'light-on-background': '#1E3B35',
+        'light-surface': '#F3EFDF',
+        'light-surface-container-lowest': '#FAF7EC',
+        'light-surface-container-low': '#DDE8D3',
+        'light-surface-container': '#D4E1C8',
+        'light-surface-container-high': '#C8D8BA',
+        'light-on-surface': '#1E3B35',
+        'light-on-surface-variant': '#3D5C54',
+        'light-outline': '#6E8880',
+        'light-outline-variant': '#C9D6BF',
+      },
+      borderRadius: {
+        'sm': '8px',
+        'DEFAULT': '12px',
+        'md': '12px',
+        'lg': '12px',
+        'xl': '16px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '20px',
+      },
+      fontFamily: {
+        'display': ['"Fraunces"', 'sans-serif'],
+        'headline': ['"Fraunces"', 'sans-serif'],
+        'title': ['"Fraunces"', 'sans-serif'],
+        'body': ['"Inter"', 'sans-serif'],
+        'label': ['"Inter"', 'sans-serif'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['38px', { lineHeight: '46px', letterSpacing: '-0.5px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg': ['30px', { lineHeight: '36px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg-mobile': ['24px', { lineHeight: '30px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-lg': ['18px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '600' }],
+        'body-lg': ['16px', { lineHeight: '26px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-md': ['14px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['15px', { lineHeight: '20px', letterSpacing: '0.1px', fontWeight: '600' }],
+        'label-md': ['13px', { lineHeight: '18px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'label-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'mono-md': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '500' }],
+      },
+      transitionDuration: {
+        'state-change': '150ms',
+        'card-flip': '300ms',
+        'reward-pop': '280ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'card-flip': '0ms',
+        'reward-pop': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'card-flip': 'cubic-bezier(0.2, 0, 0, 1)',
+        'reward-pop': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&amp;family=Inter:wght@400;500;600&amp;family=Source+Code+Pro:wght@500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>.material-symbols-outlined { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }</style>
+</head>
+<body class="bg-light-surface text-light-on-surface font-body antialiased">
+  <div class="min-h-screen flex flex-col items-center justify-center p-page-margin md:p-gutter-xl">
+    <main class="w-full max-w-md flex flex-col gap-gutter-lg">
+      <!-- Header -->
+      <header class="flex flex-col items-center text-center gap-gutter-sm">
+        <div class="w-14 h-14 rounded bg-light-primary text-light-on-primary flex items-center justify-center shadow-sm">
+          <span class="material-symbols-outlined text-headline-lg-mobile" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">admin_panel_settings</span>
+        </div>
+        <h1 class="font-display text-display-lg-mobile md:text-display-lg text-light-on-surface">Admin Login</h1>
+        <p class="font-body text-body-md text-light-on-surface-variant">Verify your academic admin email to manage IELTS vocabulary sections.</p>
+      </header>
+
+      <!-- Step Toggle (for previewing both steps) -->
+      <div class="grid grid-cols-2 gap-gutter-xs p-gutter-xs rounded-full bg-light-surface-container-low border border-light-outline-variant">
+        <button type="button" id="btn-step-1" onclick="showStep(1)" class="py-gutter-xs px-gutter-sm rounded-full bg-light-primary text-light-on-primary font-label text-label-sm">Step 1 · Email</button>
+        <button type="button" id="btn-step-2" onclick="showStep(2)" class="py-gutter-xs px-gutter-sm rounded-full text-light-on-surface font-label text-label-sm">Step 2 · 6-digit code</button>
+      </div>
+
+      <!-- Step 1: Email -->
+      <section id="step-1" class="bg-light-surface-container-lowest rounded border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col gap-gutter-md">
+        <form onsubmit="event.preventDefault(); showStep(2);" class="flex flex-col gap-gutter-md">
+          <label class="flex flex-col gap-gutter-xs">
+            <span class="font-label text-label-md text-light-on-surface">Admin email</span>
+            <input type="email" required placeholder="admin@campus.edu" class="w-full rounded border border-light-outline-variant bg-light-surface-container-lowest px-gutter-md py-gutter-sm font-body text-body-lg text-light-on-surface placeholder:text-light-outline focus:border-light-primary focus:ring-2 focus:ring-light-primary-container focus:outline-none">
+          </label>
+          <button type="submit" class="w-full py-gutter-md rounded bg-light-primary text-light-on-primary font-label text-label-lg shadow-sm hover:opacity-95">
+            Send code
+          </button>
+        </form>
+      </section>
+
+      <!-- Step 2: 6-digit One-Time Code -->
+      <section id="step-2" class="hidden bg-light-surface-container-lowest rounded border border-light-outline-variant p-gutter-lg shadow-sm flex-col gap-gutter-md">
+        <div class="rounded bg-light-surface-container-low p-gutter-sm text-light-on-surface font-body text-body-md">
+          We sent a 6-digit code to <strong>admin@campus.edu</strong>.
+        </div>
+        <form onsubmit="event.preventDefault(); document.getElementById(&#39;verify-msg&#39;).classList.remove(&#39;hidden&#39;);" class="flex flex-col gap-gutter-md">
+          <label class="flex flex-col gap-gutter-xs">
+            <span class="font-label text-label-md text-light-on-surface">6-digit one-time code</span>
+            <input type="text" inputmode="numeric" maxlength="6" placeholder="482910" class="w-full rounded border border-light-outline-variant bg-light-surface-container-lowest px-gutter-md py-gutter-sm font-mono text-headline-md text-center tracking-widest text-light-on-surface focus:border-light-primary focus:ring-2 focus:ring-light-primary-container focus:outline-none">
+          </label>
+          <button type="submit" class="w-full py-gutter-md rounded bg-light-primary text-light-on-primary font-label text-label-lg shadow-sm hover:opacity-95">
+            Verify
+          </button>
+        </form>
+        <div class="flex items-center justify-between text-label-md">
+          <button type="button" onclick="showStep(1)" class="font-label text-label-md text-light-on-surface-variant hover:underline">Change email</button>
+          <button type="button" class="font-label text-label-md text-light-primary hover:underline">Resend code</button>
+        </div>
+        <div id="verify-msg" class="hidden rounded bg-success-container text-on-success-container p-gutter-sm font-label text-label-md text-center">
+          Verified! Opening Admin Panel...
+        </div>
+      </section>
+
+      <div class="text-center">
+        <a href="#login" class="font-label text-label-sm text-light-on-surface-variant hover:underline">← Back to student login</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function showStep(n) {
+      var s1 = document.getElementById('step-1');
+      var s2 = document.getElementById('step-2');
+      var b1 = document.getElementById('btn-step-1');
+      var b2 = document.getElementById('btn-step-2');
+      if (n === 1) {
+        s1.classList.remove('hidden'); s1.classList.add('flex');
+        s2.classList.add('hidden'); s2.classList.remove('flex');
+        b1.className = 'py-gutter-xs px-gutter-sm rounded-full bg-light-primary text-light-on-primary font-label text-label-sm';
+        b2.className = 'py-gutter-xs px-gutter-sm rounded-full text-light-on-surface font-label text-label-sm';
+      } else {
+        s2.classList.remove('hidden'); s2.classList.add('flex');
+        s1.classList.add('hidden'); s1.classList.remove('flex');
+        b2.className = 'py-gutter-xs px-gutter-sm rounded-full bg-light-primary text-light-on-primary font-label text-label-sm';
+        b1.className = 'py-gutter-xs px-gutter-sm rounded-full text-light-on-surface font-label text-label-sm';
+      }
+    }
+  </script>
+
+
+</body></html>

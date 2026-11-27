@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writing Mode — BandUp Words</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config" data-stitch-original-src="b88fee06f5638fdd===../../tailwind.config.js">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'hot-pink': '#0F7F77',
+        'bright-blue': '#0A615B',
+        'pastel-mint': '#DDE8D3',
+        'pastel-lavender': '#E8E4F0',
+        'pastel-peach': '#FBE0D6',
+        'pastel-sky': '#DCEBE8',
+        'pastel-rose': '#F9DDD8',
+        'peach': '#F6B8A5',
+        'coral': '#E8664A',
+        'sunny-yellow': '#F6B8A5',
+        'on-sunny-yellow': '#1E3B35',
+        'sunny-yellow-container': '#FBE0D6',
+        'on-sunny-yellow-container': '#1E3B35',
+        'success': '#2E7D52',
+        'on-success': '#FAF7EC',
+        'success-container': '#DDE8D3',
+        'on-success-container': '#1E3B35',
+        'error': '#A93B32',
+        'on-error': '#FAF7EC',
+        'error-container': '#F9DDD8',
+        'on-error-container': '#1E3B35',
+        'light-primary': '#0F7F77',
+        'light-on-primary': '#FAF7EC',
+        'light-primary-container': '#DDE8D3',
+        'light-on-primary-container': '#1E3B35',
+        'light-secondary': '#0A615B',
+        'light-on-secondary': '#FAF7EC',
+        'light-secondary-container': '#DCEBE8',
+        'light-on-secondary-container': '#1E3B35',
+        'light-tertiary': '#B84932',
+        'light-on-tertiary': '#FAF7EC',
+        'light-tertiary-container': '#FBE0D6',
+        'light-on-tertiary-container': '#1E3B35',
+        'light-background': '#F3EFDF',
+        'light-on-background': '#1E3B35',
+        'light-surface': '#F3EFDF',
+        'light-surface-container-lowest': '#FAF7EC',
+        'light-surface-container-low': '#DDE8D3',
+        'light-surface-container': '#D4E1C8',
+        'light-surface-container-high': '#C8D8BA',
+        'light-on-surface': '#1E3B35',
+        'light-on-surface-variant': '#3D5C54',
+        'light-outline': '#6E8880',
+        'light-outline-variant': '#C9D6BF',
+      },
+      borderRadius: {
+        'sm': '8px',
+        'DEFAULT': '12px',
+        'md': '12px',
+        'lg': '12px',
+        'xl': '16px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '20px',
+      },
+      fontFamily: {
+        'display': ['"Fraunces"', 'sans-serif'],
+        'headline': ['"Fraunces"', 'sans-serif'],
+        'title': ['"Fraunces"', 'sans-serif'],
+        'body': ['"Inter"', 'sans-serif'],
+        'label': ['"Inter"', 'sans-serif'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['38px', { lineHeight: '46px', letterSpacing: '-0.5px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg': ['30px', { lineHeight: '36px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg-mobile': ['24px', { lineHeight: '30px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-lg': ['18px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '600' }],
+        'body-lg': ['16px', { lineHeight: '26px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-md': ['14px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['15px', { lineHeight: '20px', letterSpacing: '0.1px', fontWeight: '600' }],
+        'label-md': ['13px', { lineHeight: '18px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'label-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'mono-md': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '500' }],
+      },
+      transitionDuration: {
+        'state-change': '150ms',
+        'card-flip': '300ms',
+        'reward-pop': '280ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'card-flip': '0ms',
+        'reward-pop': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'card-flip': 'cubic-bezier(0.2, 0, 0, 1)',
+        'reward-pop': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&amp;family=Inter:wght@400;500;600&amp;family=Source+Code+Pro:wght@500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>.material-symbols-outlined { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }</style>
+</head>
+<body class="bg-light-surface text-light-on-surface font-body antialiased">
+  <div class="min-h-screen flex flex-col">
+    <!-- Desktop Top Navigation Bar -->
+    <header class="hidden md:flex sticky top-0 z-30 bg-light-surface-container-lowest border-b border-light-outline-variant">
+      <div class="w-full max-w-5xl mx-auto px-gutter-lg py-gutter-md flex items-center justify-between gap-gutter-lg">
+        <a href="#home" class="flex items-center gap-gutter-sm">
+          <span class="w-10 h-10 rounded-DEFAULT bg-gradient-to-br from-hot-pink to-bright-blue flex items-center justify-center text-light-on-primary">
+            <span class="material-symbols-outlined text-title-lg" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">auto_stories</span>
+          </span>
+          <span class="font-display text-title-lg text-light-on-surface">BandUp Words</span>
+        </a>
+        <nav aria-label="Primary navigation" class="flex items-center gap-gutter-sm">
+          <a href="#home" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-sm rounded-full bg-light-primary-container text-light-on-primary-container font-label text-label-md">
+            <span class="material-symbols-outlined text-title-md" aria-hidden="true">home</span>
+            <span>Home</span>
+          </a>
+          <a href="#progress" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-sm rounded-full text-light-on-surface-variant hover:bg-light-surface-container-low font-label text-label-md">
+            <span class="material-symbols-outlined text-title-md" aria-hidden="true">bar_chart</span>
+            <span>Progress</span>
+          </a>
+          <a href="#profile" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-sm rounded-full text-light-on-surface-variant hover:bg-light-surface-container-low font-label text-label-md">
+            <span class="material-symbols-outlined text-title-md" aria-hidden="true">person</span>
+            <span>Profile</span>
+          </a>
+        </nav>
+        <div class="flex items-center gap-gutter-sm">
+          <span class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-sunny-yellow-container text-on-sunny-yellow-container border border-sunny-yellow font-label text-label-md tabular-nums">
+            <span class="material-symbols-outlined text-label-lg" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">bolt</span>
+            <span>+45 Bonus XP</span>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 w-full max-w-5xl mx-auto px-page-margin md:px-gutter-lg pt-gutter-lg pb-24 md:pb-gutter-xl flex flex-col gap-gutter-lg">
+      <!-- Header -->
+      <div class="flex items-center justify-between gap-gutter-md">
+        <div class="flex items-center gap-gutter-sm">
+          <button type="button" aria-label="Back" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-light-surface-container-lowest border border-light-outline-variant text-light-on-surface">
+            <span class="material-symbols-outlined text-title-lg" aria-hidden="true">arrow_back</span>
+          </button>
+          <h1 class="font-headline text-headline-lg-mobile md:text-headline-lg text-light-on-surface">Writing Mode</h1>
+        </div>
+      </div>
+
+      <!-- Topic Picker -->
+      <div class="flex flex-wrap items-center gap-gutter-sm">
+        <button type="button" class="px-gutter-md py-gutter-xs rounded-full bg-gradient-to-r from-light-primary to-light-secondary text-light-on-primary font-label text-label-md">Environment</button>
+        <button type="button" class="px-gutter-md py-gutter-xs rounded-full bg-light-surface-container-lowest border border-light-outline-variant text-light-on-surface-variant font-label text-label-md">Education</button>
+        <button type="button" class="px-gutter-md py-gutter-xs rounded-full bg-light-surface-container-lowest border border-light-outline-variant text-light-on-surface-variant font-label text-label-md">Technology</button>
+        <button type="button" class="px-gutter-md py-gutter-xs rounded-full bg-light-surface-container-lowest border border-light-outline-variant text-light-on-surface-variant font-label text-label-md">Health</button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-start">
+        <!-- Left Column: Prompt, Target Words, Editor & Mini Tasks -->
+        <div class="lg:col-span-7 flex flex-col gap-gutter-md">
+          <!-- Task 2 Prompt -->
+          <section class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col gap-gutter-sm">
+            <span class="self-start px-gutter-md py-gutter-xs rounded-full bg-light-secondary-container text-light-on-secondary-container font-label text-label-sm">IELTS Task 2 Essay</span>
+            <p class="font-body text-body-lg text-light-on-surface">
+              Many cities face worsening air pollution due to rapid urbanization. What are the main causes, and what measures can governments take to solve this problem?
+            </p>
+          </section>
+
+          <!-- Target Words Panel -->
+          <section class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col gap-gutter-sm">
+            <div class="flex items-center justify-between gap-gutter-sm">
+              <h2 class="font-title text-title-md text-light-on-surface">Target words</h2>
+              <span id="words-used-counter" class="px-gutter-md py-gutter-xs rounded-full bg-success-container text-on-success-container font-label text-label-sm tabular-nums">Words used: 4 / 6</span>
+            </div>
+            <div id="target-chips" class="flex flex-wrap gap-gutter-xs">
+              <span data-word="mitigate" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-success-container border border-success text-on-success-container font-label text-label-md">
+                <span class="material-symbols-outlined text-label-md text-success" aria-hidden="true">check_circle</span>
+                <span>mitigate</span>
+              </span>
+              <span data-word="exacerbate" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-success-container border border-success text-on-success-container font-label text-label-md">
+                <span class="material-symbols-outlined text-label-md text-success" aria-hidden="true">check_circle</span>
+                <span>exacerbate</span>
+              </span>
+              <span data-word="sustainable" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-success-container border border-success text-on-success-container font-label text-label-md">
+                <span class="material-symbols-outlined text-label-md text-success" aria-hidden="true">check_circle</span>
+                <span>sustainable</span>
+              </span>
+              <span data-word="ubiquitous" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-success-container border border-success text-on-success-container font-label text-label-md">
+                <span class="material-symbols-outlined text-label-md text-success" aria-hidden="true">check_circle</span>
+                <span>ubiquitous</span>
+              </span>
+              <span data-word="resilient" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-light-surface-container-low border border-light-outline-variant text-light-on-surface font-label text-label-md">
+                <span>resilient</span>
+              </span>
+              <span data-word="proliferate" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-light-surface-container-low border border-light-outline-variant text-light-on-surface font-label text-label-md">
+                <span>proliferate</span>
+              </span>
+            </div>
+          </section>
+
+          <!-- Writing Textarea -->
+          <section class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col gap-gutter-sm">
+            <div class="flex items-center justify-between">
+              <label for="essay-input" class="font-title text-title-md text-light-on-surface">Your response</label>
+              <span id="live-word-count" class="font-label text-label-sm text-light-on-surface-variant tabular-nums">42 words</span>
+            </div>
+            <textarea id="essay-input" rows="5" oninput="updateLiveWords()" class="w-full rounded-md border border-light-outline-variant bg-light-surface-container-lowest p-gutter-md font-body text-body-md text-light-on-surface focus:border-bright-blue focus:ring-2 focus:ring-light-secondary-container focus:outline-none">Private cars have become ubiquitous in big cities, which continues to exacerbate air pollution. To mitigate this crisis, authorities must invest in sustainable public transport networks and create green zones.</textarea>
+
+            <!-- Two Mini Tasks -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter-sm pt-gutter-xs">
+              <div class="rounded-md bg-light-surface-container-low p-gutter-sm flex flex-col gap-gutter-xs">
+                <span class="font-label text-label-sm text-light-on-surface">Mini Task 1 · Paraphrase with synonym</span>
+                <p class="font-body text-body-md text-light-on-surface">&#34;Reduce the harm&#34; → <input type="text" value="alleviate the harm" class="mt-1 w-full rounded-sm border border-light-outline-variant px-gutter-sm py-1 text-body-md bg-light-surface-container-lowest"></p>
+              </div>
+              <div class="rounded-md bg-light-surface-container-low p-gutter-sm flex flex-col gap-gutter-xs">
+                <span class="font-label text-label-sm text-light-secondary">Mini Task 2 · Complete collocation</span>
+                <p class="font-body text-body-md text-light-on-surface">&#34;______ growth&#34; → <input type="text" value="sustainable" class="mt-1 w-full rounded-sm border border-light-outline-variant px-gutter-sm py-1 text-body-md bg-light-surface-container-lowest"></p>
+              </div>
+            </div>
+
+            <button type="button" onclick="document.getElementById(&#39;writing-results&#39;).classList.remove(&#39;hidden&#39;)" class="mt-gutter-xs w-full py-gutter-md rounded-full bg-gradient-to-r from-light-primary to-light-secondary text-light-on-primary font-label text-label-lg shadow-md">
+              Check my answer
+            </button>
+          </section>
+        </div>
+
+        <!-- Right Column: Evaluation Results -->
+        <section id="writing-results" class="lg:col-span-5 flex flex-col gap-gutter-md">
+          <!-- Score & XP -->
+          <article class="rounded-xl bg-gradient-to-r from-light-primary to-light-secondary p-gutter-lg text-light-on-primary shadow-md flex items-center justify-between gap-gutter-sm">
+            <div>
+              <p class="font-label text-label-sm">Vocabulary Usage Score</p>
+              <p class="font-headline text-headline-md tabular-nums">4 / 6 Target Words</p>
+            </div>
+            <span class="px-gutter-md py-gutter-xs rounded-full bg-sunny-yellow text-on-sunny-yellow font-label text-label-md tabular-nums">+40 XP</span>
+          </article>
+
+          <!-- Highlighted Text & Breakdown -->
+          <article class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col gap-gutter-md">
+            <h3 class="font-title text-title-md text-light-on-surface">Your Text Highlighted</h3>
+            <p class="font-body text-body-md text-light-on-surface leading-relaxed">
+              Private cars have become <mark class="px-1 rounded-sm bg-success-container text-on-success-container font-medium">ubiquitous</mark> in big cities, which continues to <mark class="px-1 rounded-sm bg-success-container text-on-success-container font-medium">exacerbate</mark> air pollution. To <mark class="px-1 rounded-sm bg-success-container text-on-success-container font-medium">mitigate</mark> this crisis, authorities must invest in <mark class="px-1 rounded-sm bg-success-container text-on-success-container font-medium">sustainable</mark> public transport networks.
+            </p>
+
+            <div class="flex flex-col gap-gutter-xs text-body-md">
+              <p class="text-success font-label text-label-md">Used correctly: ubiquitous, exacerbate, mitigate, sustainable</p>
+              <p class="text-error font-label text-label-md">Needs fix: &#34;resilient&#34; (not used yet — try &#34;resilient infrastructure&#34;)</p>
+              <p class="text-light-on-surface-variant font-label text-label-md">Missed: resilient, proliferate</p>
+            </div>
+
+            <div class="rounded-md bg-light-surface-container-low p-gutter-md flex flex-col gap-gutter-xs">
+              <span class="font-label text-label-sm text-light-secondary">AI Feedback · Grammar, Vocab &amp; Task</span>
+              <p class="font-body text-body-md text-light-on-surface">Strong topic-specific collocations (&#34;mitigate this crisis&#34;, &#34;sustainable public transport&#34;). Expand with one more cause and example to boost Task Response.</p>
+            </div>
+
+            <div class="rounded-md bg-light-surface-container-lowest border border-light-outline-variant p-gutter-md flex flex-col gap-gutter-xs">
+              <span class="font-label text-label-sm text-light-primary">Model Answer (with Target Words)</span>
+              <p class="font-body text-body-md text-light-on-surface">As private vehicles <mark class="px-1 rounded-sm bg-light-primary-container text-light-on-primary-container">proliferate</mark> and become <mark class="px-1 rounded-sm bg-light-primary-container text-light-on-primary-container">ubiquitous</mark>, emissions <mark class="px-1 rounded-sm bg-light-primary-container text-light-on-primary-container">exacerbate</mark> urban smog. Governments can <mark class="px-1 rounded-sm bg-light-primary-container text-light-on-primary-container">mitigate</mark> this by building <mark class="px-1 rounded-sm bg-light-primary-container text-light-on-primary-container">resilient</mark>, <mark class="px-1 rounded-sm bg-light-primary-container text-light-on-primary-container">sustainable</mark> transit.</p>
+              <p class="font-label text-label-sm text-success pt-gutter-xs">Mini tasks: &#34;alleviate the harm&#34; · &#34;sustainable growth&#34;</p>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Tab Bar -->
+    <nav aria-label="Mobile navigation" class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-light-surface-container-lowest border-t border-light-outline-variant px-gutter-lg py-gutter-sm">
+      <div class="flex items-center justify-around">
+        <a href="#home" aria-current="page" class="flex flex-col items-center gap-gutter-xs text-light-primary">
+          <span class="material-symbols-outlined text-headline-md" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">home</span>
+          <span class="font-label text-label-sm">Home</span>
+        </a>
+        <a href="#progress" class="flex flex-col items-center gap-gutter-xs text-light-on-surface-variant">
+          <span class="material-symbols-outlined text-headline-md" aria-hidden="true">bar_chart</span>
+          <span class="font-label text-label-sm">Progress</span>
+        </a>
+        <a href="#profile" class="flex flex-col items-center gap-gutter-xs text-light-on-surface-variant">
+          <span class="material-symbols-outlined text-headline-md" aria-hidden="true">person</span>
+          <span class="font-label text-label-sm">Profile</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <script>
+    function updateLiveWords() {
+      var text = document.getElementById('essay-input').value;
+      var words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      document.getElementById('live-word-count').textContent = words + ' words';
+      var lower = text.toLowerCase();
+      var chips = document.querySelectorAll('#target-chips [data-word]');
+      var used = 0;
+      chips.forEach(function(chip) {
+        var w = chip.getAttribute('data-word');
+        if (lower.indexOf(w) !== -1) {
+          used++;
+          chip.className = 'inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-success-container border border-success text-on-success-container font-label text-label-md';
+        } else {
+          chip.className = 'inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-light-surface-container-low border border-light-outline-variant text-light-on-surface font-label text-label-md';
+        }
+      });
+      document.getElementById('words-used-counter').textContent = 'Words used: ' + used + ' / ' + chips.length;
+    }
+  </script>
+
+
+</body></html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress — BandUp Words</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config" data-stitch-original-src="b88fee06f5638fdd===../../tailwind.config.js">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'hot-pink': '#0F7F77',
+        'bright-blue': '#0A615B',
+        'pastel-mint': '#DDE8D3',
+        'pastel-lavender': '#E8E4F0',
+        'pastel-peach': '#FBE0D6',
+        'pastel-sky': '#DCEBE8',
+        'pastel-rose': '#F9DDD8',
+        'peach': '#F6B8A5',
+        'coral': '#E8664A',
+        'sunny-yellow': '#F6B8A5',
+        'on-sunny-yellow': '#1E3B35',
+        'sunny-yellow-container': '#FBE0D6',
+        'on-sunny-yellow-container': '#1E3B35',
+        'success': '#2E7D52',
+        'on-success': '#FAF7EC',
+        'success-container': '#DDE8D3',
+        'on-success-container': '#1E3B35',
+        'error': '#A93B32',
+        'on-error': '#FAF7EC',
+        'error-container': '#F9DDD8',
+        'on-error-container': '#1E3B35',
+        'light-primary': '#0F7F77',
+        'light-on-primary': '#FAF7EC',
+        'light-primary-container': '#DDE8D3',
+        'light-on-primary-container': '#1E3B35',
+        'light-secondary': '#0A615B',
+        'light-on-secondary': '#FAF7EC',
+        'light-secondary-container': '#DCEBE8',
+        'light-on-secondary-container': '#1E3B35',
+        'light-tertiary': '#B84932',
+        'light-on-tertiary': '#FAF7EC',
+        'light-tertiary-container': '#FBE0D6',
+        'light-on-tertiary-container': '#1E3B35',
+        'light-background': '#F3EFDF',
+        'light-on-background': '#1E3B35',
+        'light-surface': '#F3EFDF',
+        'light-surface-container-lowest': '#FAF7EC',
+        'light-surface-container-low': '#DDE8D3',
+        'light-surface-container': '#D4E1C8',
+        'light-surface-container-high': '#C8D8BA',
+        'light-on-surface': '#1E3B35',
+        'light-on-surface-variant': '#3D5C54',
+        'light-outline': '#6E8880',
+        'light-outline-variant': '#C9D6BF',
+      },
+      borderRadius: {
+        'sm': '8px',
+        'DEFAULT': '12px',
+        'md': '12px',
+        'lg': '12px',
+        'xl': '16px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '20px',
+      },
+      fontFamily: {
+        'display': ['"Fraunces"', 'sans-serif'],
+        'headline': ['"Fraunces"', 'sans-serif'],
+        'title': ['"Fraunces"', 'sans-serif'],
+        'body': ['"Inter"', 'sans-serif'],
+        'label': ['"Inter"', 'sans-serif'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['38px', { lineHeight: '46px', letterSpacing: '-0.5px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg': ['30px', { lineHeight: '36px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg-mobile': ['24px', { lineHeight: '30px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-lg': ['18px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '600' }],
+        'body-lg': ['16px', { lineHeight: '26px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-md': ['14px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['15px', { lineHeight: '20px', letterSpacing: '0.1px', fontWeight: '600' }],
+        'label-md': ['13px', { lineHeight: '18px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'label-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'mono-md': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '500' }],
+      },
+      transitionDuration: {
+        'state-change': '150ms',
+        'card-flip': '300ms',
+        'reward-pop': '280ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'card-flip': '0ms',
+        'reward-pop': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'card-flip': 'cubic-bezier(0.2, 0, 0, 1)',
+        'reward-pop': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&amp;family=Inter:wght@400;500;600&amp;family=Source+Code+Pro:wght@500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>.material-symbols-outlined { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }</style>
+</head>
+<body class="bg-light-surface text-light-on-surface font-body antialiased">
+  <div class="min-h-screen flex flex-col">
+    <!-- Desktop Top Navigation Bar -->
+    <header class="hidden md:flex sticky top-0 z-30 bg-light-surface-container-lowest border-b border-light-outline-variant">
+      <div class="w-full max-w-5xl mx-auto px-gutter-lg py-gutter-md flex items-center justify-between gap-gutter-lg">
+        <a href="#home" class="flex items-center gap-gutter-sm">
+          <span class="w-10 h-10 rounded-DEFAULT bg-gradient-to-br from-hot-pink to-bright-blue flex items-center justify-center text-light-on-primary">
+            <span class="material-symbols-outlined text-title-lg" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">auto_stories</span>
+          </span>
+          <span class="font-display text-title-lg text-light-on-surface">BandUp Words</span>
+        </a>
+        <nav aria-label="Primary navigation" class="flex items-center gap-gutter-sm">
+          <a href="#home" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-sm rounded-full text-light-on-surface-variant hover:bg-light-surface-container-low font-label text-label-md">
+            <span class="material-symbols-outlined text-title-md" aria-hidden="true">home</span>
+            <span>Home</span>
+          </a>
+          <a href="#progress" aria-current="page" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-sm rounded-full bg-gradient-to-r from-light-primary to-light-secondary text-light-on-primary font-label text-label-md">
+            <span class="material-symbols-outlined text-title-md" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">bar_chart</span>
+            <span>Progress</span>
+          </a>
+          <a href="#profile" class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-sm rounded-full text-light-on-surface-variant hover:bg-light-surface-container-low font-label text-label-md">
+            <span class="material-symbols-outlined text-title-md" aria-hidden="true">person</span>
+            <span>Profile</span>
+          </a>
+        </nav>
+        <div class="flex items-center gap-gutter-sm">
+          <span class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-sunny-yellow-container text-on-sunny-yellow-container border border-sunny-yellow font-label text-label-md tabular-nums">
+            <span class="material-symbols-outlined text-label-lg" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">local_fire_department</span>
+            <span>7d</span>
+          </span>
+          <span class="inline-flex items-center gap-gutter-xs px-gutter-md py-gutter-xs rounded-full bg-light-secondary-container text-light-on-secondary-container font-label text-label-md tabular-nums">
+            <span class="material-symbols-outlined text-label-lg" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">bolt</span>
+            <span>1,240 XP</span>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 w-full max-w-5xl mx-auto px-page-margin md:px-gutter-lg pt-gutter-lg pb-24 md:pb-gutter-xl flex flex-col gap-gutter-lg">
+      <h1 class="font-headline text-headline-lg-mobile md:text-headline-lg text-light-on-surface">Your Progress</h1>
+
+      <!-- Top Metrics: Total XP, Current Streak, Best Streak, Learned vs Review -->
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-gutter-md items-stretch">
+        <article class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-md shadow-sm flex flex-col gap-gutter-xs">
+          <span class="font-label text-label-sm text-light-on-surface-variant">Total XP</span>
+          <p class="font-headline text-headline-md text-light-on-surface tabular-nums">1,240 XP</p>
+        </article>
+        <article class="bg-sunny-yellow-container rounded-xl border border-sunny-yellow p-gutter-md shadow-sm flex flex-col gap-gutter-xs">
+          <span class="font-label text-label-sm text-on-sunny-yellow-container">Current Streak</span>
+          <p class="font-headline text-headline-md text-on-sunny-yellow-container tabular-nums">7 days</p>
+        </article>
+        <article class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-md shadow-sm flex flex-col gap-gutter-xs">
+          <span class="font-label text-label-sm text-light-on-surface-variant">Best Streak</span>
+          <p class="font-headline text-headline-md text-light-on-surface tabular-nums">14 days</p>
+        </article>
+        <article class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-md shadow-sm flex flex-col gap-gutter-xs">
+          <span class="font-label text-label-sm text-light-on-surface-variant">Learned / To Review</span>
+          <p class="font-headline text-headline-md text-success tabular-nums">118 <span class="text-light-on-surface-variant text-title-md">/ 37</span></p>
+        </article>
+      </section>
+
+      <!-- Weekly Activity Calendar + Skill Usage -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter-md items-stretch">
+        <!-- Weekly Activity Calendar -->
+        <article class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col justify-between gap-gutter-md">
+          <h2 class="font-title text-title-lg text-light-on-surface">Weekly Activity</h2>
+          <div class="grid grid-cols-7 gap-gutter-xs text-center">
+            <div class="flex flex-col items-center gap-gutter-xs"><span class="w-9 h-9 rounded-full bg-gradient-to-br from-light-primary to-light-secondary text-light-on-primary flex items-center justify-center"><span class="material-symbols-outlined text-title-md" aria-hidden="true">check</span></span><span class="font-label text-label-sm">M</span></div>
+            <div class="flex flex-col items-center gap-gutter-xs"><span class="w-9 h-9 rounded-full bg-gradient-to-br from-light-primary to-light-secondary text-light-on-primary flex items-center justify-center"><span class="material-symbols-outlined text-title-md" aria-hidden="true">check</span></span><span class="font-label text-label-sm">T</span></div>
+            <div class="flex flex-col items-center gap-gutter-xs"><span class="w-9 h-9 rounded-full bg-gradient-to-br from-light-primary to-light-secondary text-light-on-primary flex items-center justify-center"><span class="material-symbols-outlined text-title-md" aria-hidden="true">check</span></span><span class="font-label text-label-sm">W</span></div>
+            <div class="flex flex-col items-center gap-gutter-xs"><span class="w-9 h-9 rounded-full bg-gradient-to-br from-light-primary to-light-secondary text-light-on-primary flex items-center justify-center"><span class="material-symbols-outlined text-title-md" aria-hidden="true">check</span></span><span class="font-label text-label-sm">T</span></div>
+            <div class="flex flex-col items-center gap-gutter-xs"><span class="w-9 h-9 rounded-full bg-gradient-to-br from-light-primary to-light-secondary text-light-on-primary flex items-center justify-center"><span class="material-symbols-outlined text-title-md" aria-hidden="true">check</span></span><span class="font-label text-label-sm">F</span></div>
+            <div class="flex flex-col items-center gap-gutter-xs"><span class="w-9 h-9 rounded-full bg-sunny-yellow-container border border-sunny-yellow text-on-sunny-yellow-container flex items-center justify-center"><span class="material-symbols-outlined text-title-md" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">local_fire_department</span></span><span class="font-label text-label-sm">S</span></div>
+            <div class="flex flex-col items-center gap-gutter-xs"><span class="w-9 h-9 rounded-full bg-light-surface-container text-light-on-surface flex items-center justify-center font-label text-label-sm">-</span><span class="font-label text-label-sm">S</span></div>
+          </div>
+        </article>
+
+        <!-- Skill Usage Panel -->
+        <article class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col gap-gutter-md">
+          <h2 class="font-title text-title-lg text-light-on-surface">Skill Usage</h2>
+          <div class="flex flex-col gap-gutter-sm">
+            <div class="flex flex-col gap-gutter-xs">
+              <div class="flex justify-between font-label text-label-md tabular-nums"><span>Speaking</span><span>42 words used</span></div>
+              <div class="w-full h-2.5 bg-light-surface-container rounded-full overflow-hidden"><div class="h-full w-3/5 bg-success rounded-full"></div></div>
+            </div>
+            <div class="flex flex-col gap-gutter-xs">
+              <div class="flex justify-between font-label text-label-md tabular-nums"><span>Writing</span><span>58 words used</span></div>
+              <div class="w-full h-2.5 bg-light-surface-container rounded-full overflow-hidden"><div class="h-full w-4/5 bg-gradient-to-r from-light-primary to-light-secondary rounded-full"></div></div>
+            </div>
+            <div class="flex flex-col gap-gutter-xs">
+              <div class="flex justify-between font-label text-label-md tabular-nums"><span>Reading</span><span>76 words met</span></div>
+              <div class="w-full h-2.5 bg-light-surface-container rounded-full overflow-hidden"><div class="h-full w-11/12 bg-bright-blue rounded-full"></div></div>
+            </div>
+            <div class="flex flex-col gap-gutter-xs">
+              <div class="flex justify-between font-label text-label-md tabular-nums"><span>Listening</span><span>51 words met</span></div>
+              <div class="w-full h-2.5 bg-light-surface-container rounded-full overflow-hidden"><div class="h-full w-2/3 bg-hot-pink rounded-full"></div></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Per-Section Progress + Word Mastery List -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter-md items-start">
+        <article class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col gap-gutter-md">
+          <h2 class="font-title text-title-lg text-light-on-surface">Section Progress</h2>
+          <div class="flex flex-col gap-gutter-sm">
+            <div class="flex flex-col gap-gutter-xs">
+              <div class="flex justify-between font-label text-label-md tabular-nums"><span class="break-all">IELTS20_Test3_Vocabulary</span><span>32/40</span></div>
+              <div class="w-full h-2.5 bg-light-surface-container rounded-full overflow-hidden"><div class="h-full w-4/5 bg-gradient-to-r from-hot-pink to-bright-blue rounded-full"></div></div>
+            </div>
+            <div class="flex flex-col gap-gutter-xs">
+              <div class="flex justify-between font-label text-label-md tabular-nums"><span class="break-all">IELTS19_Test1_Environment</span><span>21/35</span></div>
+              <div class="w-full h-2.5 bg-light-surface-container rounded-full overflow-hidden"><div class="h-full w-3/5 bg-gradient-to-r from-hot-pink to-bright-blue rounded-full"></div></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col gap-gutter-md">
+          <h2 class="font-title text-title-lg text-light-on-surface">Word Mastery Status</h2>
+          <div class="divide-y divide-light-outline-variant">
+            <div class="py-gutter-sm flex items-center justify-between gap-gutter-sm">
+              <span class="font-title text-title-md text-light-on-surface">mitigate</span>
+              <span class="px-gutter-md py-0.5 rounded-full bg-success-container text-on-success-container font-label text-label-sm">Used actively in Writing/Speaking</span>
+            </div>
+            <div class="py-gutter-sm flex items-center justify-between gap-gutter-sm">
+              <span class="font-title text-title-md text-light-on-surface">ubiquitous</span>
+              <span class="px-gutter-md py-0.5 rounded-full bg-success-container text-on-success-container font-label text-label-sm">Used actively in Writing/Speaking</span>
+            </div>
+            <div class="py-gutter-sm flex items-center justify-between gap-gutter-sm">
+              <span class="font-title text-title-md text-light-on-surface">proliferate</span>
+              <span class="px-gutter-md py-0.5 rounded-full bg-light-secondary-container text-light-on-secondary-container font-label text-label-sm">Learned</span>
+            </div>
+            <div class="py-gutter-sm flex items-center justify-between gap-gutter-sm">
+              <span class="font-title text-title-md text-light-on-surface">resilient</span>
+              <span class="px-gutter-md py-0.5 rounded-full bg-light-secondary-container text-light-on-secondary-container font-label text-label-sm">Learned</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Tab Bar -->
+    <nav aria-label="Mobile navigation" class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-light-surface-container-lowest border-t border-light-outline-variant px-gutter-lg py-gutter-sm">
+      <div class="flex items-center justify-around">
+        <a href="#home" class="flex flex-col items-center gap-gutter-xs text-light-on-surface-variant">
+          <span class="material-symbols-outlined text-headline-md" aria-hidden="true">home</span>
+          <span class="font-label text-label-sm">Home</span>
+        </a>
+        <a href="#progress" aria-current="page" class="flex flex-col items-center gap-gutter-xs text-light-primary">
+          <span class="material-symbols-outlined text-headline-md" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">bar_chart</span>
+          <span class="font-label text-label-sm">Progress</span>
+        </a>
+        <a href="#profile" class="flex flex-col items-center gap-gutter-xs text-light-on-surface-variant">
+          <span class="material-symbols-outlined text-headline-md" aria-hidden="true">person</span>
+          <span class="font-label text-label-sm">Profile</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+
+</body></html>

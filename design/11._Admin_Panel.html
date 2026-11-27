@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — BandUp Words</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config" data-stitch-original-src="b88fee06f5638fdd===../../tailwind.config.js">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'hot-pink': '#0F7F77',
+        'bright-blue': '#0A615B',
+        'pastel-mint': '#DDE8D3',
+        'pastel-lavender': '#E8E4F0',
+        'pastel-peach': '#FBE0D6',
+        'pastel-sky': '#DCEBE8',
+        'pastel-rose': '#F9DDD8',
+        'peach': '#F6B8A5',
+        'coral': '#E8664A',
+        'sunny-yellow': '#F6B8A5',
+        'on-sunny-yellow': '#1E3B35',
+        'sunny-yellow-container': '#FBE0D6',
+        'on-sunny-yellow-container': '#1E3B35',
+        'success': '#2E7D52',
+        'on-success': '#FAF7EC',
+        'success-container': '#DDE8D3',
+        'on-success-container': '#1E3B35',
+        'error': '#A93B32',
+        'on-error': '#FAF7EC',
+        'error-container': '#F9DDD8',
+        'on-error-container': '#1E3B35',
+        'light-primary': '#0F7F77',
+        'light-on-primary': '#FAF7EC',
+        'light-primary-container': '#DDE8D3',
+        'light-on-primary-container': '#1E3B35',
+        'light-secondary': '#0A615B',
+        'light-on-secondary': '#FAF7EC',
+        'light-secondary-container': '#DCEBE8',
+        'light-on-secondary-container': '#1E3B35',
+        'light-tertiary': '#B84932',
+        'light-on-tertiary': '#FAF7EC',
+        'light-tertiary-container': '#FBE0D6',
+        'light-on-tertiary-container': '#1E3B35',
+        'light-background': '#F3EFDF',
+        'light-on-background': '#1E3B35',
+        'light-surface': '#F3EFDF',
+        'light-surface-container-lowest': '#FAF7EC',
+        'light-surface-container-low': '#DDE8D3',
+        'light-surface-container': '#D4E1C8',
+        'light-surface-container-high': '#C8D8BA',
+        'light-on-surface': '#1E3B35',
+        'light-on-surface-variant': '#3D5C54',
+        'light-outline': '#6E8880',
+        'light-outline-variant': '#C9D6BF',
+      },
+      borderRadius: {
+        'sm': '8px',
+        'DEFAULT': '12px',
+        'md': '12px',
+        'lg': '12px',
+        'xl': '16px',
+        'full': '9999px',
+      },
+      spacing: {
+        'gutter-xs': '4px',
+        'gutter-sm': '8px',
+        'gutter-md': '16px',
+        'gutter-lg': '24px',
+        'gutter-xl': '32px',
+        'section': '40px',
+        'page-margin': '20px',
+      },
+      fontFamily: {
+        'display': ['"Fraunces"', 'sans-serif'],
+        'headline': ['"Fraunces"', 'sans-serif'],
+        'title': ['"Fraunces"', 'sans-serif'],
+        'body': ['"Inter"', 'sans-serif'],
+        'label': ['"Inter"', 'sans-serif'],
+        'mono': ['"Source Code Pro"', 'monospace'],
+      },
+      fontSize: {
+        'display-lg': ['38px', { lineHeight: '46px', letterSpacing: '-0.5px', fontWeight: '700' }],
+        'display-lg-mobile': ['28px', { lineHeight: '34px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg': ['30px', { lineHeight: '36px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-lg-mobile': ['24px', { lineHeight: '30px', letterSpacing: '-0.25px', fontWeight: '700' }],
+        'headline-md': ['22px', { lineHeight: '28px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-lg': ['18px', { lineHeight: '24px', letterSpacing: '0px', fontWeight: '600' }],
+        'title-md': ['16px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '600' }],
+        'body-lg': ['16px', { lineHeight: '26px', letterSpacing: '0px', fontWeight: '400' }],
+        'body-md': ['14px', { lineHeight: '22px', letterSpacing: '0px', fontWeight: '400' }],
+        'label-lg': ['15px', { lineHeight: '20px', letterSpacing: '0.1px', fontWeight: '600' }],
+        'label-md': ['13px', { lineHeight: '18px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'label-sm': ['12px', { lineHeight: '16px', letterSpacing: '0.2px', fontWeight: '600' }],
+        'mono-md': ['14px', { lineHeight: '20px', letterSpacing: '0px', fontWeight: '500' }],
+      },
+      transitionDuration: {
+        'state-change': '150ms',
+        'card-flip': '300ms',
+        'reward-pop': '280ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'card-flip': '0ms',
+        'reward-pop': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease-out',
+        'card-flip': 'cubic-bezier(0.2, 0, 0, 1)',
+        'reward-pop': 'cubic-bezier(0.2, 0, 0, 1)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&amp;family=Inter:wght@400;500;600&amp;family=Source+Code+Pro:wght@500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>.material-symbols-outlined { display: inline-block; width: 1em; height: 1em; line-height: 1 !important; box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle; }</style>
+</head>
+<body class="bg-light-surface text-light-on-surface font-body antialiased">
+  <div class="min-h-screen flex flex-col">
+    <!-- Admin-only Header (Not in normal user navigation) -->
+    <header class="bg-light-surface-container-lowest border-b border-light-outline-variant">
+      <div class="w-full max-w-5xl mx-auto px-page-margin md:px-gutter-lg py-gutter-md flex items-center justify-between gap-gutter-md">
+        <div class="flex items-center gap-gutter-sm">
+          <span class="w-10 h-10 rounded-DEFAULT bg-light-primary flex items-center justify-center text-light-on-primary">
+            <span class="material-symbols-outlined text-title-lg" style="font-variation-settings: &#39;FILL&#39; 1;" aria-hidden="true">admin_panel_settings</span>
+          </span>
+          <div class="flex flex-col">
+            <span class="font-display text-title-lg text-light-on-surface">BandUp Words Admin</span>
+            <span class="font-label text-label-sm text-light-on-surface-variant">Restricted · Vocabulary Excel Manager</span>
+          </div>
+        </div>
+        <span class="px-gutter-md py-gutter-xs rounded-full bg-light-primary-container text-light-on-primary-container font-label text-label-sm">Admin Only</span>
+      </div>
+    </header>
+
+    <main class="flex-1 w-full max-w-5xl mx-auto px-page-margin md:px-gutter-lg py-gutter-lg flex flex-col gap-gutter-lg">
+      <!-- Drag-and-Drop Excel Upload -->
+      <section class="bg-light-surface-container-lowest rounded-DEFAULT border-2 border-dashed border-light-primary p-gutter-xl text-center flex flex-col items-center gap-gutter-md">
+        <span class="w-14 h-14 rounded-full bg-light-secondary-container text-light-secondary flex items-center justify-center">
+          <span class="material-symbols-outlined text-headline-lg-mobile" aria-hidden="true">upload_file</span>
+        </span>
+        <div class="flex flex-col gap-gutter-xs">
+          <h1 class="font-headline text-headline-md text-light-on-surface">Upload Excel Vocabulary File</h1>
+          <p class="font-body text-body-md text-light-on-surface-variant">Drag &amp; drop an <code class="font-mono">.xlsx</code> file here. Only the <strong>&#34;Vocabulary&#34;</strong> sheet is read.</p>
+        </div>
+        <button type="button" class="px-gutter-lg py-gutter-sm rounded-DEFAULT bg-light-primary text-light-on-primary font-label text-label-lg shadow-sm">
+          Choose file
+        </button>
+      </section>
+
+      <!-- Detected Columns & Auto Section Name Preview -->
+      <section class="bg-light-surface-container-lowest rounded-DEFAULT border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col gap-gutter-md">
+        <div class="flex flex-wrap items-center justify-between gap-gutter-sm">
+          <div class="flex flex-col gap-gutter-xs">
+            <span class="font-label text-label-sm text-success">Preview · Sheet: &#34;Vocabulary&#34;</span>
+            <h2 class="font-title text-title-lg text-light-on-surface break-all">Auto-created section: IELTS20_Test4_Academic</h2>
+          </div>
+          <span class="px-gutter-md py-gutter-xs rounded-full bg-success-container text-on-success-container font-label text-label-sm">10 / 10 columns detected</span>
+        </div>
+
+        <div class="flex flex-wrap gap-gutter-xs">
+          <span class="px-gutter-sm py-0.5 rounded-full bg-light-surface-container-low border border-light-outline-variant font-mono text-label-sm">#</span>
+          <span class="px-gutter-sm py-0.5 rounded-full bg-light-surface-container-low border border-light-outline-variant font-mono text-label-sm">Word</span>
+          <span class="px-gutter-sm py-0.5 rounded-full bg-light-surface-container-low border border-light-outline-variant font-mono text-label-sm">synonyms</span>
+          <span class="px-gutter-sm py-0.5 rounded-full bg-light-surface-container-low border border-light-outline-variant font-mono text-label-sm">Azerbaijani</span>
+          <span class="px-gutter-sm py-0.5 rounded-full bg-light-surface-container-low border border-light-outline-variant font-mono text-label-sm">Collocation</span>
+          <span class="px-gutter-sm py-0.5 rounded-full bg-light-surface-container-low border border-light-outline-variant font-mono text-label-sm">Type</span>
+          <span class="px-gutter-sm py-0.5 rounded-full bg-light-surface-container-low border border-light-outline-variant font-mono text-label-sm">Pronunciation</span>
+          <span class="px-gutter-sm py-0.5 rounded-full bg-light-surface-container-low border border-light-outline-variant font-mono text-label-sm">Definition</span>
+          <span class="px-gutter-sm py-0.5 rounded-full bg-light-surface-container-low border border-light-outline-variant font-mono text-label-sm">Example</span>
+          <span class="px-gutter-sm py-0.5 rounded-full bg-light-surface-container-low border border-light-outline-variant font-mono text-label-sm">Source</span>
+        </div>
+
+        <div class="overflow-x-auto rounded-DEFAULT border border-light-outline-variant">
+          <table class="w-full text-left font-body text-body-md">
+            <thead class="bg-light-surface-container-low font-label text-label-sm text-light-on-surface">
+              <tr>
+                <th class="p-gutter-sm">#</th>
+                <th class="p-gutter-sm">Word</th>
+                <th class="p-gutter-sm">Type</th>
+                <th class="p-gutter-sm">Azerbaijani</th>
+                <th class="p-gutter-sm">Collocation</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-light-outline-variant">
+              <tr>
+                <td class="p-gutter-sm tabular-nums">1</td>
+                <td class="p-gutter-sm font-title">mitigate</td>
+                <td class="p-gutter-sm">v</td>
+                <td class="p-gutter-sm">yüngülləşdirmək</td>
+                <td class="p-gutter-sm">mitigate the effects</td>
+              </tr>
+              <tr>
+                <td class="p-gutter-sm tabular-nums">2</td>
+                <td class="p-gutter-sm font-title">ubiquitous</td>
+                <td class="p-gutter-sm">adj</td>
+                <td class="p-gutter-sm">hər yerdə mövcud</td>
+                <td class="p-gutter-sm">become ubiquitous</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex justify-end">
+          <button type="button" class="px-gutter-lg py-gutter-sm rounded-DEFAULT bg-light-primary text-light-on-primary font-label text-label-lg shadow-sm">
+            Confirm and add section
+          </button>
+        </div>
+      </section>
+
+      <!-- Existing Sections Management -->
+      <section class="bg-light-surface-container-lowest rounded-xl border border-light-outline-variant p-gutter-lg shadow-sm flex flex-col gap-gutter-md">
+        <h2 class="font-title text-title-lg text-light-on-surface">Existing Sections</h2>
+        <div class="divide-y divide-light-outline-variant">
+          <div class="py-gutter-sm flex flex-wrap items-center justify-between gap-gutter-sm">
+            <div>
+              <p class="font-title text-title-md text-light-on-surface break-all">IELTS20_Test3_Vocabulary</p>
+              <p class="font-body text-body-md text-light-on-surface-variant tabular-nums">40 words</p>
+            </div>
+            <div class="flex items-center gap-gutter-sm">
+              <button type="button" class="px-gutter-md py-gutter-xs rounded-full border border-light-outline-variant font-label text-label-md text-light-on-surface">Rename</button>
+              <button type="button" class="px-gutter-md py-gutter-xs rounded-full bg-error-container text-on-error-container font-label text-label-md">Delete</button>
+            </div>
+          </div>
+          <div class="py-gutter-sm flex flex-wrap items-center justify-between gap-gutter-sm">
+            <div>
+              <p class="font-title text-title-md text-light-on-surface break-all">IELTS19_Test1_Environment</p>
+              <p class="font-body text-body-md text-light-on-surface-variant tabular-nums">35 words</p>
+            </div>
+            <div class="flex items-center gap-gutter-sm">
+              <button type="button" class="px-gutter-md py-gutter-xs rounded-full border border-light-outline-variant font-label text-label-md text-light-on-surface">Rename</button>
+              <button type="button" class="px-gutter-md py-gutter-xs rounded-full bg-error-container text-on-error-container font-label text-label-md">Delete</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+
+</body></html>
