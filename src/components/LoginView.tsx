@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
 interface LoginViewProps {
@@ -13,6 +13,11 @@ export const LoginView: React.FC<LoginViewProps> = ({
   const [imgFailed, setImgFailed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(authError ?? null);
+
+  // Show auth errors that arrive after the first render (e.g. profile load failure after OAuth redirect)
+  useEffect(() => {
+    if (authError) setErrorMsg(authError);
+  }, [authError]);
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
