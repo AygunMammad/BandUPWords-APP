@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase, supabaseUrl, supabasePublishableKey } from '../lib/supabase';
 
 interface LoginViewProps {
   onOpenAdminLogin: () => void;
@@ -26,6 +26,28 @@ export const LoginView: React.FC<LoginViewProps> = ({
       try {
         const hadToken = window.location.hash.includes('access_token');
         const hadCode = window.location.search.includes('code=');
+        let manual = 'n/a';
+        let userCall = 'n/a';
+        if (hadToken) {
+          const hp = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+          const at = hp.get('access_token') ?? '';
+          const rt = hp.get('refresh_token') ?? '';
+          try {
+            const r = await fetch(`${supabaseUrl}/auth/v1/user`, {
+              headers: { apikey: supabasePublishableKey, Authorization: `Bearer ${at}` },
+            });
+            const t = await r.text();
+            userCall = `${r.status} ${t.slice(0, 80)}`;
+          } catch (e) {
+            userCall = 'fetch failed: ' + (e instanceof Error ? e.message : String(e));
+          }
+          try {
+            const r2 = await supabase.auth.setSession({ access_token: at, refresh_token: rt });
+            manual = r2.error ? `ERR ${r2.error.message}` : `ok user=${!!r2.data.session}`;
+          } catch (e) {
+            manual = 'throw ' + (e instanceof Error ? e.message : String(e));
+          }
+        }
         const s1 = await supabase.auth.getSession();
         const u1 = await supabase.auth.getUser();
         const keys = Object.keys(localStorage).filter((k) => k.startsWith('sb-'));
@@ -38,6 +60,10 @@ export const LoginView: React.FC<LoginViewProps> = ({
             `getUser=${u1.data.user ? 'ok' : 'null'}`,
             `getUserErr=${u1.error?.message ?? 'none'}`,
             `storageKeys=${keys.length}`,
+            `manualSetSession=${manual}`,
+            `userEndpoint=${userCall}`,
+            `supaUrl=${supabaseUrl}`,
+            `keyStart=${supabasePublishableKey.slice(0, 14)}`,
             `origin=${window.location.origin}`,
           ].join(' | ')
         );
