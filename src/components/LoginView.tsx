@@ -19,6 +19,34 @@ export const LoginView: React.FC<LoginViewProps> = ({
     if (authError) setErrorMsg(authError);
   }, [authError]);
 
+  // TEMPORARY DIAGNOSTICS (remove after login is fixed)
+  const [debugInfo, setDebugInfo] = useState<string>('checking...');
+  useEffect(() => {
+    (async () => {
+      try {
+        const hadToken = window.location.hash.includes('access_token');
+        const hadCode = window.location.search.includes('code=');
+        const s1 = await supabase.auth.getSession();
+        const u1 = await supabase.auth.getUser();
+        const keys = Object.keys(localStorage).filter((k) => k.startsWith('sb-'));
+        setDebugInfo(
+          [
+            `urlHasToken=${hadToken}`,
+            `urlHasCode=${hadCode}`,
+            `session=${!!s1.data.session}`,
+            `sessionErr=${s1.error?.message ?? 'none'}`,
+            `getUser=${u1.data.user ? 'ok' : 'null'}`,
+            `getUserErr=${u1.error?.message ?? 'none'}`,
+            `storageKeys=${keys.length}`,
+            `origin=${window.location.origin}`,
+          ].join(' | ')
+        );
+      } catch (e) {
+        setDebugInfo('debug failed: ' + (e instanceof Error ? e.message : String(e)));
+      }
+    })();
+  }, []);
+
   const handleGoogleSignIn = async () => {
     setLoading(true);
     setErrorMsg(null);
@@ -133,6 +161,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
             Admin login
           </button>
         </div>
+        <p className="text-[11px] text-gray-500 break-all mt-2">{debugInfo}</p>
       </main>
     </div>
   );
