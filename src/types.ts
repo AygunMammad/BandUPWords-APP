@@ -65,9 +65,22 @@ export interface VocabSection {
 export type WordMastery = 'new' | 'review' | 'learned' | 'active';
 
 export interface UserProfile {
+  id?: string;
   firstName: string;
   lastName: string;
+  email?: string;
+  avatarUrl?: string;
   targetBand: string;
+}
+
+export interface LeaderboardEntry {
+  id: string;
+  displayName: string;
+  avatarUrl: string | null;
+  targetBand: string;
+  xp: number;
+  currentStreak: number;
+  bestStreak: number;
 }
 
 export interface SkillCounts {

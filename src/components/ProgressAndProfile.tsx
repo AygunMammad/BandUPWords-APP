@@ -1,12 +1,57 @@
-import React, { useState } from 'react';
-import { StudyState, UserProfile, VocabSection } from '../types';
+import React, { useCallback, useEffect, useState } from 'react';
+import { fetchLeaderboard } from '../lib/supabaseData';
+import { LeaderboardEntry, StudyState, UserProfile, VocabSection } from '../types';
 
 interface ProgressViewProps {
   studyState: StudyState;
   sections: VocabSection[];
+  currentUserId?: string;
 }
 
-export const ProgressView: React.FC<ProgressViewProps> = ({ studyState, sections }) => {
+export const ProgressView: React.FC<ProgressViewProps> = ({
+  studyState,
+  sections,
+  currentUserId,
+}) => {
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [lbLoading, setLbLoading] = useState<boolean>(true);
+  const [lbError, setLbError] = useState<string | null>(null);
+
+  const loadLeaderboard = useCallback(async () => {
+    setLbLoading(true);
+    setLbError(null);
+    try {
+      const entries = await fetchLeaderboard(50);
+      setLeaderboard(entries);
+    } catch (err) {
+      setLbError(
+        err instanceof Error ? err.message : 'Could not load leaderboard.'
+      );
+    } finally {
+      setLbLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadLeaderboard();
+  }, [loadLeaderboard]);
+
+  const rankedLeaderboard = leaderboard
+    .map((entry) =>
+      entry.id === currentUserId
+        ? {
+            ...entry,
+            xp: studyState.xp,
+            currentStreak: studyState.currentStreak,
+            bestStreak: studyState.bestStreak,
+          }
+        : entry
+    )
+    .sort((a, b) => b.xp - a.xp || b.currentStreak - a.currentStreak);
+
+  const myRankIndex = currentUserId
+    ? rankedLeaderboard.findIndex((e) => e.id === currentUserId)
+    : -1;
   const allWords = sections.flatMap((s) => s.words);
   const learnedCount = allWords.filter((w) => {
     const m = studyState.wordMastery[w.id];
@@ -197,6 +242,139 @@ export const ProgressView: React.FC<ProgressViewProps> = ({ studyState, sections
           </div>
         </article>
       </div>
+
+      {/* Leaderboard */}
+      <section className="bg-light-surface-container-lowest rounded-[16px] border border-light-outline-variant p-6 shadow-sm flex flex-col gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <span
+              className="material-symbols-outlined material-symbols-filled text-[22px] text-sunny-yellow"
+              aria-hidden="true"
+            >
+              emoji_events
+            </span>
+            <div>
+              <h2 className="font-title text-[18px] font-semibold text-light-on-surface">
+                IELTS Leaderboard
+              </h2>
+              <p className="font-body text-[13px] text-light-on-surface-variant">
+                See your XP ranking alongside other learners.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {myRankIndex >= 0 && (
+              <span className="px-3 py-1 rounded-full bg-light-secondary-container text-light-on-secondary-container font-label text-[12px] font-semibold tabular-nums">
+                Your Rank: #{myRankIndex + 1} · {studyState.xp.toLocaleString()} XP
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={loadLeaderboard}
+              disabled={lbLoading}
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border border-light-outline-variant font-label text-[12px] font-semibold text-light-on-surface hover:bg-light-surface-container-low disabled:opacity-50"
+            >
+              <span className="material-symbols-outlined text-[15px]" aria-hidden="true">
+                refresh
+              </span>
+              <span>Refresh</span>
+            </button>
+          </div>
+        </div>
+
+        {lbLoading ? (
+          <div className="py-6 text-center font-body text-[14px] text-light-on-surface-variant">
+            Loading leaderboard...
+          </div>
+        ) : lbError ? (
+          <div className="rounded-[12px] bg-error-container text-on-error-container px-4 py-3 font-label text-[13px] font-semibold">
+            {lbError}
+          </div>
+        ) : rankedLeaderboard.length === 0 ? (
+          <div className="py-6 text-center font-body text-[14px] text-light-on-surface-variant">
+            No learners on the leaderboard yet. Earn XP to claim #1!
+          </div>
+        ) : (
+          <div className="divide-y divide-light-outline-variant">
+            {rankedLeaderboard.map((entry, idx) => {
+              const rank = idx + 1;
+              const isMe = entry.id === currentUserId;
+              const initials = entry.displayName
+                .split(/\s+/)
+                .filter(Boolean)
+                .slice(0, 2)
+                .map((p) => p[0]?.toUpperCase() || '')
+                .join('') || 'S';
+
+              const rankBadgeClass =
+                rank === 1
+                  ? 'bg-sunny-yellow-container text-on-sunny-yellow-container border border-sunny-yellow'
+                  : rank === 2
+                  ? 'bg-light-secondary-container text-light-on-secondary-container'
+                  : rank === 3
+                  ? 'bg-light-primary-container text-light-on-primary-container'
+                  : 'bg-light-surface-container text-light-on-surface-variant';
+
+              return (
+                <div
+                  key={entry.id}
+                  className={`py-3 px-3 -mx-3 rounded-[12px] flex items-center justify-between gap-3 ${
+                    isMe ? 'bg-light-primary-container/35' : ''
+                  }`}
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span
+                      className={`w-8 h-8 rounded-full flex items-center justify-center font-label text-[13px] font-bold tabular-nums shrink-0 ${rankBadgeClass}`}
+                    >
+                      #{rank}
+                    </span>
+
+                    {entry.avatarUrl ? (
+                      <img
+                        src={entry.avatarUrl}
+                        alt={entry.displayName}
+                        referrerPolicy="no-referrer"
+                        className="w-9 h-9 rounded-full object-cover border border-light-outline-variant shrink-0"
+                      />
+                    ) : (
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-light-primary to-light-secondary text-light-on-primary flex items-center justify-center font-label text-[13px] font-bold shrink-0">
+                        {initials}
+                      </div>
+                    )}
+
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-title text-[15px] font-semibold text-light-on-surface truncate">
+                          {entry.displayName}
+                        </span>
+                        {isMe && (
+                          <span className="px-2 py-0.5 rounded-full bg-light-primary text-light-on-primary font-label text-[11px] font-semibold shrink-0">
+                            You
+                          </span>
+                        )}
+                      </div>
+                      <p className="font-label text-[12px] text-light-on-surface-variant tabular-nums">
+                        Target Band {entry.targetBand} · {entry.currentStreak}d streak
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-light-surface-container-low font-label text-[13px] font-semibold text-light-on-surface tabular-nums shrink-0">
+                    <span
+                      className="material-symbols-outlined material-symbols-filled text-[15px] text-light-primary"
+                      aria-hidden="true"
+                    >
+                      bolt
+                    </span>
+                    <span>{entry.xp.toLocaleString()} XP</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
     </main>
   );
 };
@@ -226,8 +404,9 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     onUpdateProfile({
-      firstName: firstName.trim() || 'Leyla',
-      lastName: lastName.trim() || 'Mammadova',
+      ...user,
+      firstName: firstName.trim() || user.firstName || 'Student',
+      lastName: lastName.trim(),
       targetBand,
     });
     setSavedMsg('Profile preferences saved.');
@@ -242,14 +421,28 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
 
       <section className="bg-light-surface-container-lowest rounded-[16px] border border-light-outline-variant p-6 shadow-sm flex flex-col gap-5">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-light-primary to-light-secondary text-light-on-primary flex items-center justify-center font-display text-[22px] font-bold">
-            {(user.firstName[0] || 'L').toUpperCase()}
-            {(user.lastName[0] || 'M').toUpperCase()}
-          </div>
+          {user.avatarUrl ? (
+            <img
+              src={user.avatarUrl}
+              alt={`${user.firstName} ${user.lastName}`.trim()}
+              referrerPolicy="no-referrer"
+              className="w-14 h-14 rounded-full object-cover border border-light-outline-variant shrink-0"
+            />
+          ) : (
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-light-primary to-light-secondary text-light-on-primary flex items-center justify-center font-display text-[22px] font-bold shrink-0">
+              {(user.firstName[0] || 'S').toUpperCase()}
+              {(user.lastName[0] || '').toUpperCase()}
+            </div>
+          )}
           <div>
             <h2 className="font-title text-[20px] font-semibold text-light-on-surface">
               {user.firstName} {user.lastName}
             </h2>
+            {user.email && (
+              <p className="font-body text-[13px] text-light-on-surface-variant">
+                {user.email}
+              </p>
+            )}
             <p className="font-body text-[14px] text-light-on-surface-variant tabular-nums">
               {studyState.xp.toLocaleString()} XP · {studyState.currentStreak}-day study streak · Target Band {user.targetBand}
             </p>

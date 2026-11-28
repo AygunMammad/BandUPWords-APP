@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AdminLoginView, AdminPanelView } from './components/AdminAuthAndPanel';
 import { AppShell } from './components/AppShell';
 import { FlashcardsMode } from './components/FlashcardsMode';
@@ -12,48 +12,23 @@ import { SectionModesView } from './components/SectionModesView';
 import { SpeakingMode } from './components/SpeakingMode';
 import { WritingMode } from './components/WritingMode';
 import { INITIAL_STUDY_STATE, SEED_SECTIONS } from './data/seedVocabulary';
+import { supabase } from './lib/supabase';
+import {
+  fetchSectionsFromSupabase,
+  loadOrCreateUserRecord,
+  saveUserRecord,
+} from './lib/supabaseData';
 import { ScreenId, StudyState, UserProfile, VocabSection } from './types';
 
-const STORAGE_USER_KEY = 'bandup_user_v1';
-const STORAGE_STUDY_KEY = 'bandup_study_v1';
-
-function loadInitialUser(): UserProfile | null {
-  try {
-    const raw = localStorage.getItem(STORAGE_USER_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    if (parsed && typeof parsed.firstName === 'string') {
-      return {
-        firstName: parsed.firstName,
-        lastName: parsed.lastName || '',
-        targetBand: parsed.targetBand || '7.5',
-      };
-    }
-  } catch {
-    // ignore storage errors
-  }
-  return null;
-}
-
-function loadInitialStudyState(): StudyState {
-  try {
-    const raw = localStorage.getItem(STORAGE_STUDY_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (parsed && typeof parsed.xp === 'number') {
-        return parsed;
-      }
-    }
-  } catch {
-    // ignore storage errors
-  }
-  return INITIAL_STUDY_STATE;
-}
-
 export default function App() {
-  const [user, setUser] = useState<UserProfile | null>(() => loadInitialUser());
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [authLoading, setAuthLoading] = useState<boolean>(true);
+  const [authError, setAuthError] = useState<string | null>(null);
   const [sections, setSections] = useState<VocabSection[]>(SEED_SECTIONS);
-  const [studyState, setStudyState] = useState<StudyState>(() => loadInitialStudyState());
+  const [studyState, setStudyState] = useState<StudyState>(INITIAL_STUDY_STATE);
+
+  // Prevent saving initial empty/default state before Supabase hydration finishes
+  const hydratedUserIdRef = useRef<string | null>(null);
 
   // Admin auth token stays strictly in React memory (never persisted to browser storage)
   const [adminToken, setAdminToken] = useState<string | null>(null);
@@ -61,26 +36,132 @@ export default function App() {
 
   const [screen, setScreen] = useState<ScreenId>(() => {
     if (window.location.hash === '#admin') return 'admin-login';
-    return loadInitialUser() ? 'home' : 'login';
+    return 'login';
   });
   const [activeSectionId, setActiveSectionId] = useState<string>(SEED_SECTIONS[0]?.id ?? '');
 
-  // Load persistent vocabulary sections from SQLite backend
+  // Subscribe to Supabase Auth session (handles Google OAuth redirect & session persistence)
   useEffect(() => {
     let mounted = true;
-    fetch('/api/sections')
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
+
+    const syncAuthSession = async () => {
+      try {
+        const {
+          data: { session },
+          error,
+        } = await supabase.auth.getSession();
+
+        if (error) {
+          if (mounted) setAuthError(error.message);
+        }
+
+        if (session?.user) {
+          const record = await loadOrCreateUserRecord(session.user);
+          if (!mounted) return;
+          hydratedUserIdRef.current = session.user.id;
+          setUser(record.profile);
+          setStudyState(record.studyState);
+          setScreen((prev) =>
+            prev === 'login' ? 'home' : prev
+          );
+        } else if (mounted) {
+          hydratedUserIdRef.current = null;
+          setUser(null);
+          setStudyState(INITIAL_STUDY_STATE);
+        }
+      } catch (err) {
+        if (mounted) {
+          setAuthError(
+            err instanceof Error ? err.message : 'Could not load your profile.'
+          );
+        }
+      } finally {
+        if (mounted) setAuthLoading(false);
+      }
+    };
+
+    syncAuthSession();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (!mounted) return;
+
+      if (event === 'SIGNED_OUT' || !session?.user) {
+        hydratedUserIdRef.current = null;
+        setUser(null);
+        setStudyState(INITIAL_STUDY_STATE);
+        setScreen((prev) =>
+          prev === 'admin-login' || prev === 'admin-panel' ? prev : 'login'
+        );
+        setAuthLoading(false);
+        return;
+      }
+
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+        if (hydratedUserIdRef.current === session.user.id) {
+          return;
+        }
+        try {
+          const record = await loadOrCreateUserRecord(session.user);
+          if (!mounted) return;
+          hydratedUserIdRef.current = session.user.id;
+          setUser(record.profile);
+          setStudyState(record.studyState);
+          setAuthError(null);
+          setScreen((prev) => (prev === 'login' ? 'home' : prev));
+        } catch (err) {
+          if (mounted) {
+            setAuthError(
+              err instanceof Error ? err.message : 'Could not load your profile.'
+            );
+          }
+        } finally {
+          if (mounted) setAuthLoading(false);
+        }
+      }
+    });
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  // Load persistent vocabulary sections from Supabase (with /api/sections fallback)
+  useEffect(() => {
+    let mounted = true;
+
+    const loadSections = async () => {
+      try {
+        const supaSections = await fetchSectionsFromSupabase();
+        if (mounted && supaSections && supaSections.length > 0) {
+          setSections(supaSections);
+          setActiveSectionId((prev) =>
+            supaSections.some((s) => s.id === prev) ? prev : supaSections[0].id
+          );
+          return;
+        }
+      } catch {
+        // fall through to /api/sections
+      }
+
+      try {
+        const res = await fetch('/api/sections');
+        const data = res.ok ? await res.json() : null;
         if (mounted && data && Array.isArray(data.sections) && data.sections.length > 0) {
           setSections(data.sections);
           setActiveSectionId((prev) =>
             data.sections.some((s: VocabSection) => s.id === prev) ? prev : data.sections[0].id
           );
         }
-      })
-      .catch(() => {
+      } catch {
         // fallback stays SEED_SECTIONS
-      });
+      }
+    };
+
+    loadSections();
+
     return () => {
       mounted = false;
     };
@@ -97,37 +178,24 @@ export default function App() {
     return () => window.removeEventListener('hashchange', onHashChange);
   }, [adminToken]);
 
+  // Persist user profile & study state to Supabase whenever they change
   useEffect(() => {
-    try {
-      if (user) {
-        localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(user));
-      } else {
-        localStorage.removeItem(STORAGE_USER_KEY);
-      }
-    } catch {
-      // ignore
+    const userId = user?.id;
+    if (!userId || hydratedUserIdRef.current !== userId) {
+      return;
     }
-  }, [user]);
 
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_STUDY_KEY, JSON.stringify(studyState));
-    } catch {
-      // ignore
-    }
-  }, [studyState]);
+    const timer = window.setTimeout(() => {
+      saveUserRecord(userId, user, studyState).catch(() => {
+        // silent background sync retry on next change
+      });
+    }, 350);
+
+    return () => window.clearTimeout(timer);
+  }, [user, studyState]);
 
   const activeSection =
     sections.find((s) => s.id === activeSectionId) ?? sections[0] ?? SEED_SECTIONS[0];
-
-  const handleLogin = (firstName: string, lastName: string) => {
-    setUser((prev) => ({
-      firstName,
-      lastName,
-      targetBand: prev?.targetBand || '7.5',
-    }));
-    setScreen('home');
-  };
 
   const handleMarkFlashcard = (wordId: string, known: boolean) => {
     setStudyState((prev) => {
@@ -193,6 +261,14 @@ export default function App() {
     });
   };
 
+  const handleSignOut = async () => {
+    hydratedUserIdRef.current = null;
+    await supabase.auth.signOut();
+    setUser(null);
+    setStudyState(INITIAL_STUDY_STATE);
+    setScreen('login');
+  };
+
   const openAdminLogin = () => {
     if (adminToken) {
       setScreen('admin-panel');
@@ -241,13 +317,22 @@ export default function App() {
     );
   }
 
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-light-surface text-light-on-surface gap-3">
+        <div className="w-10 h-10 rounded-full border-4 border-light-primary-container border-t-light-primary animate-spin" />
+        <p className="font-label text-[14px] font-semibold text-light-on-surface-variant">
+          Loading your BandUp Words account...
+        </p>
+      </div>
+    );
+  }
+
   if (screen === 'login' || !user) {
     return (
       <LoginView
-        initialFirstName={user?.firstName}
-        initialLastName={user?.lastName}
-        onLogin={handleLogin}
         onOpenAdminLogin={openAdminLogin}
+        authError={authError}
       />
     );
   }
@@ -285,7 +370,11 @@ export default function App() {
       )}
 
       {screen === 'progress' && (
-        <ProgressView studyState={studyState} sections={sections} />
+        <ProgressView
+          studyState={studyState}
+          sections={sections}
+          currentUserId={user.id}
+        />
       )}
 
       {screen === 'profile' && (
@@ -294,10 +383,7 @@ export default function App() {
           studyState={studyState}
           onUpdateProfile={(updated) => setUser(updated)}
           onResetProgress={() => setStudyState(INITIAL_STUDY_STATE)}
-          onSignOut={() => {
-            setUser(null);
-            setScreen('login');
-          }}
+          onSignOut={handleSignOut}
           onOpenAdminLogin={openAdminLogin}
         />
       )}

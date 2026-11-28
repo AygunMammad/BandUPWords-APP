@@ -1,5 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import * as XLSX from 'xlsx';
+import { supabase } from '../lib/supabase';
+import {
+  OWNER_ADMIN_EMAIL,
+  adminCreateSection,
+  adminCreateWord,
+  adminDeleteSection,
+  adminDeleteWord,
+  adminImportWordsBatch,
+  adminRenameSection,
+  adminUpdateWord,
+} from '../lib/supabaseData';
 import { VocabSection, VocabWord } from '../types';
 
 interface AdminLoginViewProps {
@@ -7,105 +18,67 @@ interface AdminLoginViewProps {
   onBackToStudentLogin: () => void;
 }
 
-interface AdminStatusResponse {
-  ownerEmail: string;
-  envPasscodeActive: boolean;
-  isClaimed: boolean;
-  needsFirstRunClaim: boolean;
-  authenticated: boolean;
-}
-
 export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
   onAuthenticated,
   onBackToStudentLogin,
 }) => {
-  const [status, setStatus] = useState<AdminStatusResponse | null>(null);
-  const [statusLoading, setStatusLoading] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [checking, setChecking] = useState(true);
+  const [signedInEmail, setSignedInEmail] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
-    fetch('/api/admin/status')
-      .then((r) => r.json())
-      .then((data: AdminStatusResponse) => {
+    supabase.auth
+      .getSession()
+      .then(({ data: { session }, error }) => {
         if (!active) return;
-        setStatus(data);
-        setEmail(data.ownerEmail || '');
+        if (error) {
+          setErrorMsg(error.message);
+        }
+        const email = session?.user?.email?.toLowerCase() || null;
+        setSignedInEmail(email);
+        if (email && email === OWNER_ADMIN_EMAIL && session?.access_token) {
+          onAuthenticated(session.access_token, email);
+        }
       })
       .catch(() => {
-        if (active) setErrorMsg('Could not reach authentication server.');
+        if (active) setErrorMsg('Could not verify Google session.');
       })
       .finally(() => {
-        if (active) setStatusLoading(false);
+        if (active) setChecking(false);
       });
+
     return () => {
       active = false;
     };
-  }, []);
+  }, [onAuthenticated]);
 
-  const handleClaim = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMsg(null);
-    if (password.length < 8) {
-      setErrorMsg('Password must be at least 8 characters long.');
-      return;
-    }
-    if (password !== confirmPassword) {
-      setErrorMsg('Passwords do not match.');
-      return;
-    }
-
+  const handleGoogleOwnerLogin = async () => {
     setSubmitting(true);
+    setErrorMsg(null);
     try {
-      const resp = await fetch('/api/admin/claim', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/#admin`,
+          queryParams: {
+            prompt: 'select_account',
+            login_hint: OWNER_ADMIN_EMAIL,
+          },
+        },
       });
-      const data = await resp.json();
-      if (!resp.ok) {
-        setErrorMsg(data.error || 'Could not claim owner admin account.');
-        return;
+      if (error) {
+        setErrorMsg(error.message);
+        setSubmitting(false);
       }
-      setSuccessMsg('Owner administrator account configured. Opening dashboard...');
-      setTimeout(() => onAuthenticated(data.token, data.email), 350);
-    } catch {
-      setErrorMsg('Network error while setting up administrator account.');
-    } finally {
+    } catch (err) {
+      setErrorMsg(
+        err instanceof Error ? err.message : 'Google sign-in failed.'
+      );
       setSubmitting(false);
     }
   };
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMsg(null);
-    setSubmitting(true);
-    try {
-      const resp = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await resp.json();
-      if (!resp.ok) {
-        setErrorMsg(data.error || 'Invalid administrator credentials.');
-        return;
-      }
-      setSuccessMsg('Verified! Opening Admin Dashboard...');
-      setTimeout(() => onAuthenticated(data.token, data.email), 300);
-    } catch {
-      setErrorMsg('Network error while signing in.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const isFirstRun = Boolean(status?.needsFirstRunClaim);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-5 md:p-8 bg-light-surface text-light-on-surface">
@@ -120,7 +93,7 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
             Admin Login
           </h1>
           <p className="font-body text-[14px] text-light-on-surface-variant text-pretty">
-            Restricted to the website owner to manage BandUp Words vocabulary.
+            Restricted to the website owner ({OWNER_ADMIN_EMAIL}) to manage BandUp Words vocabulary &amp; Excel imports.
           </p>
         </header>
 
@@ -133,123 +106,40 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
           </div>
         )}
 
-        {successMsg && (
-          <div className="rounded-[12px] bg-success-container border border-success text-on-success-container p-3.5 font-label text-[13px] font-semibold text-center">
-            {successMsg}
-          </div>
-        )}
-
-        {statusLoading ? (
-          <section className="bg-light-surface-container-lowest rounded-[16px] border border-light-outline-variant p-6 shadow-sm text-center font-body text-[14px] text-light-on-surface-variant">
-            Checking administrator access status...
-          </section>
-        ) : isFirstRun ? (
-          <section className="bg-light-surface-container-lowest rounded-[16px] border border-light-outline-variant p-6 shadow-sm flex flex-col gap-4">
-            <div className="rounded-[12px] bg-light-surface-container-low p-3.5 flex flex-col gap-1">
-              <span className="font-label text-[12px] font-semibold text-light-secondary">
-                First-Run Owner Setup
-              </span>
-              <p className="font-body text-[13px] text-light-on-surface">
-                Set the single administrator password for website owner{' '}
-                <strong>{status?.ownerEmail}</strong>. This locks after setup.
-              </p>
-            </div>
-
-            <form onSubmit={handleClaim} className="flex flex-col gap-4">
-              <label className="flex flex-col gap-1">
-                <span className="font-label text-[13px] font-semibold text-light-on-surface">
-                  Website owner email
-                </span>
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="owner@example.com"
-                  className="w-full rounded-[12px] border border-light-outline-variant bg-light-surface-container-lowest px-4 py-2.5 font-body text-[15px] text-light-on-surface focus:border-light-primary focus:ring-2 focus:ring-light-primary-container focus:outline-none"
-                />
-              </label>
-
-              <label className="flex flex-col gap-1">
-                <span className="font-label text-[13px] font-semibold text-light-on-surface">
-                  Create admin password (min 8 chars)
-                </span>
-                <input
-                  type="password"
-                  required
-                  minLength={8}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter strong password"
-                  className="w-full rounded-[12px] border border-light-outline-variant bg-light-surface-container-lowest px-4 py-2.5 font-body text-[15px] text-light-on-surface focus:border-light-primary focus:ring-2 focus:ring-light-primary-container focus:outline-none"
-                />
-              </label>
-
-              <label className="flex flex-col gap-1">
-                <span className="font-label text-[13px] font-semibold text-light-on-surface">
-                  Confirm admin password
-                </span>
-                <input
-                  type="password"
-                  required
-                  minLength={8}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Re-enter password"
-                  className="w-full rounded-[12px] border border-light-outline-variant bg-light-surface-container-lowest px-4 py-2.5 font-body text-[15px] text-light-on-surface focus:border-light-primary focus:ring-2 focus:ring-light-primary-container focus:outline-none"
-                />
-              </label>
+        <section className="bg-light-surface-container-lowest rounded-[16px] border border-light-outline-variant p-6 shadow-sm flex flex-col gap-4">
+          {checking ? (
+            <p className="text-center font-body text-[14px] text-light-on-surface-variant">
+              Checking Google owner session...
+            </p>
+          ) : (
+            <>
+              {signedInEmail && signedInEmail !== OWNER_ADMIN_EMAIL && (
+                <div className="rounded-[12px] bg-sunny-yellow-container border border-sunny-yellow p-3.5 text-on-sunny-yellow-container font-body text-[13px]">
+                  Currently signed in as <strong>{signedInEmail}</strong>. Please switch to{' '}
+                  <strong>{OWNER_ADMIN_EMAIL}</strong> to open the Admin Panel.
+                </div>
+              )}
 
               <button
-                type="submit"
+                type="button"
                 disabled={submitting}
-                className="w-full py-3.5 rounded-full bg-gradient-to-r from-light-primary to-light-secondary text-light-on-primary font-label text-[15px] font-semibold shadow-sm hover:opacity-95 disabled:opacity-60"
+                onClick={handleGoogleOwnerLogin}
+                className="w-full inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-full bg-gradient-to-r from-light-primary to-light-secondary text-light-on-primary font-label text-[15px] font-semibold shadow-sm hover:opacity-95 disabled:opacity-60"
               >
-                {submitting ? 'Securing Admin Account...' : 'Claim Owner Admin & Enter'}
-              </button>
-            </form>
-          </section>
-        ) : (
-          <section className="bg-light-surface-container-lowest rounded-[16px] border border-light-outline-variant p-6 shadow-sm flex flex-col gap-4">
-            <form onSubmit={handleLogin} className="flex flex-col gap-4">
-              <label className="flex flex-col gap-1">
-                <span className="font-label text-[13px] font-semibold text-light-on-surface">
-                  Owner administrator email
+                <span className="material-symbols-outlined text-[20px]" aria-hidden="true">
+                  login
                 </span>
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={status?.ownerEmail || 'owner@example.com'}
-                  className="w-full rounded-[12px] border border-light-outline-variant bg-light-surface-container-lowest px-4 py-2.5 font-body text-[15px] text-light-on-surface focus:border-light-primary focus:ring-2 focus:ring-light-primary-container focus:outline-none"
-                />
-              </label>
-
-              <label className="flex flex-col gap-1">
-                <span className="font-label text-[13px] font-semibold text-light-on-surface">
-                  Administrator password
+                <span>
+                  {submitting
+                    ? 'Redirecting to Google...'
+                    : signedInEmail && signedInEmail !== OWNER_ADMIN_EMAIL
+                    ? 'Switch to Owner Google Account'
+                    : 'Sign in with Google (Owner)'}
                 </span>
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter administrator password"
-                  className="w-full rounded-[12px] border border-light-outline-variant bg-light-surface-container-lowest px-4 py-2.5 font-body text-[15px] text-light-on-surface focus:border-light-primary focus:ring-2 focus:ring-light-primary-container focus:outline-none"
-                />
-              </label>
-
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full py-3.5 rounded-full bg-gradient-to-r from-light-primary to-light-secondary text-light-on-primary font-label text-[15px] font-semibold shadow-sm hover:opacity-95 disabled:opacity-60"
-              >
-                {submitting ? 'Verifying...' : 'Sign In to Admin Panel'}
               </button>
-            </form>
-          </section>
-        )}
+            </>
+          )}
+        </section>
 
         <div className="text-center">
           <button
@@ -378,26 +268,6 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
     });
   }, [allWords, filterSectionId, filterTopic, searchQuery]);
 
-  const adminFetch = async (url: string, options: RequestInit = {}) => {
-    const resp = await fetch(url, {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${adminToken}`,
-        ...(options.headers || {}),
-      },
-    });
-    if (resp.status === 401 || resp.status === 403) {
-      onSessionExpired();
-      throw new Error('Administrator session expired. Please sign in again.');
-    }
-    const data = await resp.json();
-    if (!resp.ok) {
-      throw new Error(data.error || 'Request failed.');
-    }
-    return data;
-  };
-
   // --- Word CRUD Handlers ---
   const openAddWordForm = () => {
     setEditingWordId(null);
@@ -431,19 +301,13 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
     setStatusBanner(null);
     try {
       if (editingWordId) {
-        const data = await adminFetch(`/api/words/${encodeURIComponent(editingWordId)}`, {
-          method: 'PATCH',
-          body: JSON.stringify(wordForm),
-        });
-        onSectionsUpdated(data.sections);
-        setStatusBanner({ type: 'success', text: `Updated "${wordForm.word}" in database.` });
+        const updatedSections = await adminUpdateWord(editingWordId, wordForm);
+        onSectionsUpdated(updatedSections);
+        setStatusBanner({ type: 'success', text: `Updated "${wordForm.word}" in Supabase.` });
       } else {
-        const data = await adminFetch('/api/words', {
-          method: 'POST',
-          body: JSON.stringify(wordForm),
-        });
-        onSectionsUpdated(data.sections);
-        setStatusBanner({ type: 'success', text: `Added "${wordForm.word}" to database.` });
+        const updatedSections = await adminCreateWord(wordForm);
+        onSectionsUpdated(updatedSections);
+        setStatusBanner({ type: 'success', text: `Added "${wordForm.word}" to Supabase.` });
       }
       setWordFormOpen(false);
       setEditingWordId(null);
@@ -460,10 +324,8 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
   const handleDeleteWord = async (wordId: string, label: string) => {
     setStatusBanner(null);
     try {
-      const data = await adminFetch(`/api/words/${encodeURIComponent(wordId)}`, {
-        method: 'DELETE',
-      });
-      onSectionsUpdated(data.sections);
+      const updatedSections = await adminDeleteWord(wordId);
+      onSectionsUpdated(updatedSections);
       setStatusBanner({ type: 'success', text: `Deleted "${label}".` });
     } catch (err: unknown) {
       setStatusBanner({
@@ -558,14 +420,11 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
           ? { sectionId: importExistingSectionId, words: parsedRows }
           : { sectionName: importNewSectionName.trim() || 'Imported_Vocabulary', words: parsedRows };
 
-      const data = await adminFetch('/api/words/import', {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      });
+      const data = await adminImportWordsBatch(payload);
       onSectionsUpdated(data.sections);
       setStatusBanner({
         type: 'success',
-        text: `Imported ${data.importedCount} vocabulary words into persistent database.`,
+        text: `Imported ${data.importedCount} vocabulary words into Supabase.`,
       });
       setParsedRows([]);
       setImportNewSectionName('');
@@ -631,13 +490,10 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
     if (!newSectionName.trim()) return;
     setStatusBanner(null);
     try {
-      const data = await adminFetch('/api/sections', {
-        method: 'POST',
-        body: JSON.stringify({ name: newSectionName.trim() }),
-      });
-      onSectionsUpdated(data.sections);
+      const updatedSections = await adminCreateSection(newSectionName.trim());
+      onSectionsUpdated(updatedSections);
       setNewSectionName('');
-      setStatusBanner({ type: 'success', text: 'New vocabulary section created.' });
+      setStatusBanner({ type: 'success', text: 'New vocabulary section created in Supabase.' });
     } catch (err: unknown) {
       setStatusBanner({
         type: 'error',
@@ -650,11 +506,8 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
     if (!editingSecName.trim()) return;
     setStatusBanner(null);
     try {
-      const data = await adminFetch(`/api/sections/${encodeURIComponent(secId)}`, {
-        method: 'PATCH',
-        body: JSON.stringify({ name: editingSecName.trim() }),
-      });
-      onSectionsUpdated(data.sections);
+      const updatedSections = await adminRenameSection(secId, editingSecName.trim());
+      onSectionsUpdated(updatedSections);
       setEditingSecId(null);
       setStatusBanner({ type: 'success', text: 'Section renamed.' });
     } catch (err: unknown) {
@@ -668,10 +521,8 @@ export const AdminPanelView: React.FC<AdminPanelViewProps> = ({
   const handleDeleteSection = async (secId: string, name: string) => {
     setStatusBanner(null);
     try {
-      const data = await adminFetch(`/api/sections/${encodeURIComponent(secId)}`, {
-        method: 'DELETE',
-      });
-      onSectionsUpdated(data.sections);
+      const updatedSections = await adminDeleteSection(secId);
+      onSectionsUpdated(updatedSections);
       setStatusBanner({ type: 'success', text: `Deleted section "${name}".` });
     } catch (err: unknown) {
       setStatusBanner({

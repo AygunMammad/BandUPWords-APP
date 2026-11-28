@@ -1,31 +1,42 @@
 import React, { useState } from 'react';
+import { supabase } from '../lib/supabase';
 
 interface LoginViewProps {
-  initialFirstName?: string;
-  initialLastName?: string;
-  onLogin: (firstName: string, lastName: string) => void;
   onOpenAdminLogin: () => void;
+  authError?: string | null;
 }
 
 export const LoginView: React.FC<LoginViewProps> = ({
-  initialFirstName = '',
-  initialLastName = '',
-  onLogin,
   onOpenAdminLogin,
+  authError,
 }) => {
-  const [firstName, setFirstName] = useState(initialFirstName);
-  const [lastName, setLastName] = useState(initialLastName);
   const [imgFailed, setImgFailed] = useState(false);
-  const [feedback, setFeedback] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(authError ?? null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const cleanFirst = firstName.trim() || 'Leyla';
-    const cleanLast = lastName.trim() || 'Mammadova';
-    setFeedback(`Welcome, ${cleanFirst}! Your IELTS study streak starts now.`);
-    setTimeout(() => {
-      onLogin(cleanFirst, cleanLast);
-    }, 350);
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    setErrorMsg(null);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin,
+          queryParams: {
+            prompt: 'select_account',
+          },
+        },
+      });
+      if (error) {
+        setErrorMsg(error.message);
+        setLoading(false);
+      }
+    } catch (err) {
+      setErrorMsg(
+        err instanceof Error ? err.message : 'Google sign-in failed. Please try again.'
+      );
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,7 +53,10 @@ export const LoginView: React.FC<LoginViewProps> = ({
             />
           ) : (
             <div className="w-full h-40 rounded-[12px] border border-light-outline-variant bg-light-surface-container-low flex flex-col items-center justify-center gap-2 text-light-primary">
-              <span className="material-symbols-outlined material-symbols-filled text-[36px]" aria-hidden="true">
+              <span
+                className="material-symbols-outlined material-symbols-filled text-[36px]"
+                aria-hidden="true"
+              >
                 local_library
               </span>
               <span className="font-label text-[13px] font-semibold">Campus Study Library</span>
@@ -59,46 +73,48 @@ export const LoginView: React.FC<LoginViewProps> = ({
           </div>
         </header>
 
-        <section className="bg-light-surface-container-lowest rounded-[16px] border border-light-outline-variant p-6 md:p-8 shadow-sm flex flex-col gap-6">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <label className="flex flex-col gap-1 w-full">
-              <span className="font-label text-[13px] font-semibold text-light-on-surface">First name</span>
-              <input
-                type="text"
-                required
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                placeholder="e.g. Leyla"
-                className="w-full rounded-[12px] border border-light-outline-variant bg-light-surface-container-lowest px-4 py-2.5 font-body text-[16px] text-light-on-surface placeholder:text-light-outline focus:border-light-primary focus:ring-2 focus:ring-light-primary-container focus:outline-none"
+        <section className="bg-light-surface-container-lowest rounded-[16px] border border-light-outline-variant p-6 md:p-8 shadow-sm flex flex-col gap-5">
+          <div className="flex flex-col gap-1 text-center">
+            <h2 className="font-title text-[18px] font-semibold text-light-on-surface">
+              Sign in to continue
+            </h2>
+            <p className="font-body text-[14px] text-light-on-surface-variant">
+              Save your XP, study streak, and compete on the IELTS Leaderboard.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            disabled={loading}
+            onClick={handleGoogleSignIn}
+            className="w-full inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-full bg-light-surface-container-lowest border border-light-outline-variant text-light-on-surface shadow-sm hover:bg-light-surface-container-low active:scale-[0.98] transition-all duration-150 disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light-primary"
+          >
+            <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="#4285F4"
+                d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"
               />
-            </label>
-
-            <label className="flex flex-col gap-1 w-full">
-              <span className="font-label text-[13px] font-semibold text-light-on-surface">Last name</span>
-              <input
-                type="text"
-                required
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                placeholder="e.g. Mammadova"
-                className="w-full rounded-[12px] border border-light-outline-variant bg-light-surface-container-lowest px-4 py-2.5 font-body text-[16px] text-light-on-surface placeholder:text-light-outline focus:border-light-primary focus:ring-2 focus:ring-light-primary-container focus:outline-none"
+              <path
+                fill="#34A853"
+                d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"
               />
-            </label>
+              <path
+                fill="#FBBC05"
+                d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"
+              />
+              <path
+                fill="#EA4335"
+                d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"
+              />
+            </svg>
+            <span className="font-label text-[15px] font-semibold whitespace-nowrap">
+              {loading ? 'Connecting to Google...' : 'Continue with Google'}
+            </span>
+          </button>
 
-            <button
-              type="submit"
-              className="mt-2 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-light-primary to-light-secondary text-light-on-primary shadow-md hover:opacity-95 active:scale-[0.98] transition-transform duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light-primary"
-            >
-              <span className="font-label text-[15px] font-semibold whitespace-nowrap">Start Learning</span>
-              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
-                arrow_forward
-              </span>
-            </button>
-          </form>
-
-          {feedback && (
-            <div className="rounded-[12px] bg-success-container text-on-success-container px-4 py-2.5 font-label text-[13px] font-semibold text-center">
-              {feedback}
+          {errorMsg && (
+            <div className="rounded-[12px] bg-error-container text-on-error-container px-4 py-2.5 font-label text-[13px] font-semibold text-center">
+              {errorMsg}
             </div>
           )}
         </section>
