@@ -84,7 +84,7 @@ export default function App() {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
       if (!mounted) return;
 
       if (event === 'SIGNED_OUT' || !session?.user) {
@@ -102,6 +102,9 @@ export default function App() {
         if (hydratedUserIdRef.current === session.user.id) {
           return;
         }
+        // IMPORTANT: do not await Supabase calls directly inside onAuthStateChange (auth lock deadlock).
+        // Defer the profile load to the next tick, outside the auth callback.
+        setTimeout(async () => {
         try {
           const record = await loadOrCreateUserRecord(session.user);
           if (!mounted) return;
@@ -119,6 +122,7 @@ export default function App() {
         } finally {
           if (mounted) setAuthLoading(false);
         }
+        }, 0);
       }
     });
 
